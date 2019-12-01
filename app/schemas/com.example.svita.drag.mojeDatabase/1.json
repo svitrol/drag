@@ -1,0 +1,105 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "1c2a7ae90eaa49ef1b944173a5584d20",
+    "entities": [
+      {
+        "tableName": "UlozCoPujde",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `popis` TEXT, `typPrvku` TEXT, `url` TEXT, `jmeno` TEXT, `portak` INTEGER NOT NULL, `souradniceX` REAL NOT NULL, `souradniceY` REAL NOT NULL, `uriDatabaze` TEXT, `dbHeslo` TEXT, `dbJmeno` TEXT, `dbPort` INTEGER NOT NULL, `mamDb` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "popis",
+            "columnName": "popis",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "typPrvku",
+            "columnName": "typPrvku",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "jmeno",
+            "columnName": "jmeno",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "port",
+            "columnName": "portak",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "soradniceX",
+            "columnName": "souradniceX",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "soradniceY",
+            "columnName": "souradniceY",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "db",
+            "columnName": "uriDatabaze",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dbheslo",
+            "columnName": "dbHeslo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dbjmeno",
+            "columnName": "dbJmeno",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dbport",
+            "columnName": "dbPort",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "MamDatabazi",
+            "columnName": "mamDb",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1c2a7ae90eaa49ef1b944173a5584d20\")"
+    ]
+  }
+}
