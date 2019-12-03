@@ -21,10 +21,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.example.svita.drag.nactiDataDoGrafu.HttpHandler;
+import com.example.svita.drag.nactiDataDoGrafu.vykresliGraf;
+import com.github.mikephil.charting.charts.LineChart;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +37,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Teplomer extends Prvek {
@@ -181,9 +187,10 @@ public class Teplomer extends Prvek {
     protected void fachej(Activity kdeToDelam){
         funkcnost facha=new funkcnost(kdeToDelam);
     }
-    class funkcnost{
+    class funkcnost {
         TextView conectly,teplotka,vlhkostik,Od,Do;
-        Button obnov,pripij,vyberOd,vyberDo;
+        Button obnov,pripij,vyberOd,vyberDo,VypracujGraf;
+        RadioButton teplotaMod;
         LinearLayout grafovaCast;
         Thread Thread1 = null;
         String SERVER_IP=getUrl().toString();
@@ -219,8 +226,29 @@ public class Teplomer extends Prvek {
             Od=kdeToDelam.findViewById(R.id.od);
             Do=kdeToDelam.findViewById(R.id.Do);
             grafovaCast=kdeToDelam.findViewById(R.id.grafy);
+            teplotaMod=kdeToDelam.findViewById(R.id.radioButton);
+            VypracujGraf=kdeToDelam.findViewById(R.id.zpracuj);
             if(MamDatabazi){
                 grafovaCast.setVisibility(View.VISIBLE);
+                VypracujGraf.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String hodnota="vlhkost";
+                        if(teplotaMod.isChecked())hodnota="teplota";
+
+                        ArrayList<CharSequence> lisovniTajemstvi=new ArrayList<>();
+                        lisovniTajemstvi.add(db);
+                        lisovniTajemstvi.add(dbjmeno);
+                        lisovniTajemstvi.add(dbheslo);
+                        lisovniTajemstvi.add(hodnota);
+                        lisovniTajemstvi.add(DateFormat.format("yyyy-MM-dd HH:mm:ss", odDatum));
+                        lisovniTajemstvi.add(DateFormat.format("yyyy-MM-dd HH:mm:ss", DoDadtum));
+                        Intent grafek=new Intent(kdeToDelam, vykresliGraf.class);
+                        grafek.putExtra("Graf",lisovniTajemstvi);
+                        kdeToDelam.startActivity(grafek);
+
+                    }
+                });
                 vyberOd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
