@@ -60,8 +60,8 @@ public class HttpHandler extends AsyncTask<String,Void,String> {
     }
     @Override
     protected void onPreExecute() {
-        alertDialog = new AlertDialog.Builder(ctx).create();
-        alertDialog.setTitle("Login Information....");
+        Graf.setNoDataText("Graf v přípravě");
+
     }
     String hodnota="";
     @Override
@@ -120,14 +120,11 @@ public class HttpHandler extends AsyncTask<String,Void,String> {
         String []pole=data.split(";");
         int velikost=pole.length;
         String[] casy=new String[velikost];
-        for(int i=0;i<velikost;i++){
-            String[] housky=(pole[i]).split(",");
+        for(int i=0;i<velikost;i++) {
+            String[] housky = (pole[i]).split(",");
             /*Hodnota hodnotisk=new Hodnota(housky[0],housky[1],housky[2]);*/
-            casy[i]=housky[2];
-            yValues.add(new Entry(i,Float.parseFloat(housky[1])));
-        }
-        for (String radek:pole) {
-
+            casy[i] = housky[2];
+            yValues.add(new Entry(i, Float.parseFloat(housky[1])));
         }
         Graf.setDragEnabled(true);
         Graf.setScaleEnabled(true);

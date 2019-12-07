@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.text.InputType;
 import android.text.format.DateFormat;
 import android.text.method.PasswordTransformationMethod;
@@ -197,6 +198,7 @@ public class Teplomer extends Prvek {
         int SERVER_PORT=getPort();
         Calendar odDatum=null,DoDadtum=null;
         Activity kdeToDelam;
+        Boolean pripojen=false;
         public  funkcnost(final Activity kdeToDelam){
             this.kdeToDelam=kdeToDelam;
             conectly=kdeToDelam.findViewById(R.id.textView11);
@@ -253,14 +255,14 @@ public class Teplomer extends Prvek {
                     @Override
                     public void onClick(View v) {
                         odDatum=Calendar.getInstance();
-                        handleDateButton(Od,kdeToDelam,odDatum);
+                        handleDateButton(Od,kdeToDelam,odDatum,true);
                     }
                 });
                 vyberDo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         DoDadtum=Calendar.getInstance();
-                        handleDateButton(Do,kdeToDelam,DoDadtum);
+                        handleDateButton(Do,kdeToDelam,DoDadtum,false);
                     }
                 });
             }
@@ -269,7 +271,8 @@ public class Teplomer extends Prvek {
             }
         }
         public void refresh(View v) {
-            new Thread(new Thread3("t:v")).start();
+                new Thread(new Thread3("t:v")).start();
+
         }
         public void pripjenisa(View v){
             Thread1 = new Thread(new Thread1());
@@ -291,10 +294,18 @@ public class Teplomer extends Prvek {
                             conectly.setText("Connected");
                         }
                     });
+                    pripojen=true;
                     new Thread(new Thread2()).start();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    conectly.setText("Disconnected");
+                    pripojen=false;
+                    kdeToDelam.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            conectly.setText("Disconnected");
+                        }
+                    });
+
                 }
             }
         }
@@ -308,7 +319,7 @@ public class Teplomer extends Prvek {
                             kdeToDelam.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(kdeToDelam," prisla "+message,Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(kdeToDelam," prisla "+message,Toast.LENGTH_LONG).show();
                                     try{
                                         String []polak=message.split(":");
                                         teplotka.setText("teplota: "+polak[0]+"°C");
@@ -339,18 +350,21 @@ public class Teplomer extends Prvek {
             }
             @Override
             public void run() {
-                output.write(message);
-                output.flush();
-                kdeToDelam.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(kdeToDelam,"poslána teplota",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if(pripojen){
+                    output.write(message);
+                    output.flush();
+                    kdeToDelam.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(kdeToDelam,"poslána teplota",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
             }
         }
 
-        private void handleDateButton(final TextView dateTextView, final Activity kdeToDelam,final Calendar calendar1) {
+        private void handleDateButton(final TextView dateTextView, final Activity kdeToDelam, final Calendar calendar1, final boolean mod) {//mod true =od
             String neco="";
             final Calendar calendar = Calendar.getInstance();
             int YEAR = calendar.get(Calendar.YEAR);
@@ -368,21 +382,54 @@ public class Teplomer extends Prvek {
                     int MINUTE = calendar.get(Calendar.MINUTE);
                     boolean is24HourFormat = DateFormat.is24HourFormat(kdeToDelam);
 
-                    TimePickerDialog timePickerDialog = new TimePickerDialog(kdeToDelam, new TimePickerDialog.OnTimeSetListener() {
+                    final TimePickerDialog timePickerDialog = new TimePickerDialog(kdeToDelam, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                             calendar1.set(Calendar.HOUR, hour);
                             calendar1.set(Calendar.MINUTE, minute);
                             String dateText = DateFormat.format("HH:mm EEEE, dd.MMM yyyy", calendar1).toString();//MM-dd-yyyy HH:mm
                             dateTextView.setText(dateText);
+                            if(mod){
+                                if(DoDadtum!=null){
+                                    if(DoDadtum.getTimeInMillis()<odDatum.getTimeInMillis()){
+                                        Toast.makeText(kdeToDelam,"od datum je vetší než do datum",Toast.LENGTH_LONG).show();
+                                        handleDateButton(dateTextView,kdeToDelam,calendar1,mod);
+                                    }
+
+                                }
+                            }
+                            else {
+                                if(odDatum!=null){
+                                    if(DoDadtum.getTimeInMillis()<odDatum.getTimeInMillis()){
+                                        Toast.makeText(kdeToDelam,"od datum je vetší než do datum",Toast.LENGTH_LONG).show();
+                                        handleDateButton(dateTextView,kdeToDelam,calendar1,mod);
+                                    }
+
+                                }
+                            }
                         }
                     }, HOUR, MINUTE,is24HourFormat);
 
                     timePickerDialog.show();
                 }
             }, YEAR, MONTH, DATE);
-
+            if(mod){
+                if(DoDadtum!=null){
+                    datePickerDialog.getDatePicker().setMaxDate(DoDadtum.getTimeInMillis());
+                }
+                else {
+                    datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+                }
+            }
+            else {
+                datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+                if(odDatum!=null){
+                    datePickerDialog.getDatePicker().setMinDate(odDatum.getTimeInMillis());
+                }
+            }
             datePickerDialog.show();
+
+
         }
     }
 }
