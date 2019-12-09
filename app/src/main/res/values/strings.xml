@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">drag</string>
+    <string name="title_activity_makra_zasuvky">makraZasuvky</string>
+    <string-array name="znaminka">
+        <item>Větší</item>
+        <item>Menší</item>
+        <item>Rovno</item>
+        <item>NeRovno</item>
+        <item>Vetší Rovno</item>
+        <item>Menší rovno</item>
+    </string-array>
+    <string-array name="logickeOperatory">
+        <item> A zároveň</item>
+        <item>Nebo</item>
+    </string-array>
 </resources>

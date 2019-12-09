@@ -13,7 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".nactiDataDoGrafu.vykresliGraf"></activity>
+        <activity android:name=".vychytavkyprozasuvku.tvorbaPodminky"></activity>
+        <activity
+            android:name=".vychytavkyprozasuvku.makraZasuvky"
+            android:label="@string/title_activity_makra_zasuvky"
+            android:parentActivityName=".FunkcePrvku"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.svita.drag.FunkcePrvku" />
+        </activity>
+        <activity android:name=".nactiDataDoGrafu.vykresliGraf" />
         <activity android:name=".Prihlaseni">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

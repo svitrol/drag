@@ -1,10 +1,12 @@
 package com.example.svita.drag;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.text.format.DateFormat;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
@@ -13,11 +15,15 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.svita.drag.nactiDataDoGrafu.vykresliGraf;
+import com.example.svita.drag.vychytavkyprozasuvku.makraZasuvky;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Zasuvka extends Prvek {
     public Zasuvka() {
@@ -27,12 +33,12 @@ public class Zasuvka extends Prvek {
         vlastnostiLayout=R.layout.vlastnosti_zasuvka;
     }
 
-    public Uri getDb() {
+    public String getDb() {
         return db;
     }
 
-    public void setDb(String ipdbcka) {
-        db = Uri.parse(ipdbcka);
+    public void setDb(String url) {
+        db = url;
     }
 
     public String getDbjmeno() {
@@ -58,7 +64,7 @@ public class Zasuvka extends Prvek {
         return dbheslo;
     }
 
-    public Uri db=Uri.parse("1.1.1.1");
+    public String db="1.1.1.1";
     protected String dbheslo="";
     public String dbjmeno="";
     public int dbport=80;
@@ -198,9 +204,9 @@ public class Zasuvka extends Prvek {
         int SERVER_PORT=getPort();
         Activity kdeToDelam;
         boolean poslalJsem=false,dosloOk=false;
-        Button aktivni=null;
+        Button aktivni=null,Makra;
         Button[]pole=new Button[8];
-        public  funkcnost(Activity kdeToDelam){
+        public  funkcnost(final Activity kdeToDelam){
             this.kdeToDelam=kdeToDelam;
             pole[0]=kdeToDelam.findViewById(R.id.Z1);
             pole[1]=kdeToDelam.findViewById(R.id.Z2);
@@ -256,26 +262,46 @@ public class Zasuvka extends Prvek {
                     }
                 });
             }
+            Makra=kdeToDelam.findViewById(R.id.makra);
+            Makra.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //začni aktivitu s makrem
+                    zacniAktivituProNoveMakro(kdeToDelam);
+                }
+            });
 
 
 
+        }
+        private void zacniAktivituProNoveMakro(final Activity kdeToDelam){
+            ArrayList<CharSequence> lisovniTajemstvi=new ArrayList<>();
+            lisovniTajemstvi.add(db);
+            lisovniTajemstvi.add(dbjmeno);
+            lisovniTajemstvi.add(dbheslo);
+            Intent grafek=new Intent(kdeToDelam, makraZasuvky.class);
+            grafek.putExtra("Graf",lisovniTajemstvi);
+            kdeToDelam.startActivity(grafek);
         }
         private String stav(boolean stav){
-            if(stav)return"ON";
-            return "OFF";
+            if(stav)return"1";
+            return "0";
         }
         public void posli(View v) {
-            boolean stavator=true;
-            if(((Button)v).getHint().toString().equals("ON")){
-                stavator=false;
+            if(pripojen){
+                boolean stavator=true;
+                if(((Button)v).getHint().toString().equals("ON")){
+                    stavator=false;
+                }
+                if(poslalJsem&&dosloOk||!poslalJsem){
+                    String zprava="R"+((Button)v).getText().charAt(1)+":"+stav(stavator);
+                    new Thread(new Thread3(zprava)).start();
+                    poslalJsem=true;
+                    dosloOk=false;
+                    aktivni=(Button)v;
+                }
             }
-            if(poslalJsem&&dosloOk||!poslalJsem){
-                String zprava="R"+((Button)v).getText().charAt(1)+":"+stav(stavator);
-                new Thread(new Thread3(zprava)).start();
-                poslalJsem=true;
-                dosloOk=false;
-                aktivni=(Button)v;
-            }
+
 
         }
         public void pripjenisa(View v){
@@ -335,7 +361,7 @@ public class Zasuvka extends Prvek {
                                             String[]polak= message.split(";");
                                             //RX:ON
                                             for(int i=0;i<kolikZasuvek;i++){
-                                                if(polak[i].split(":")[1].equals("ON")){
+                                                if(polak[i].split(":")[1].equals("1")){
                                                     pole[i].setHint("ON");
                                                     pole[i].setBackgroundColor(Color.rgb(152, 240, 53));
                                                 }
@@ -360,6 +386,14 @@ public class Zasuvka extends Prvek {
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
+                    }
+                    catch (NullPointerException e){
+                        kdeToDelam.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(kdeToDelam," neprisla ",Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }
                 }
             }

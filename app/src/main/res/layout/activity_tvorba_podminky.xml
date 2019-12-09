@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".vychytavkyprozasuvku.tvorbaPodminky">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteY="602dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actv"
+                    android:layout_width="155dp"
+                    android:layout_height="wrap_content"
+                    android:completionHint="Prvni část"
+                    android:completionThreshold="1"
+                    android:hint="Prvni část"
+                    android:popupBackground="@color/colorAccent" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="141dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/actv2"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:completionHint="Druhá část"
+                    android:completionThreshold="1"
+                    android:hint="Druhá část"
+                    android:popupBackground="@color/colorAccent" />
+
+                <Spinner
+                    android:id="@+id/spinner2"
+                    android:layout_width="141dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="209dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Podmínka splněna" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/kladnavetevrele"
+                            android:layout_width="99dp"
+                            android:layout_height="wrap_content" />
+
+                        <Spinner
+                            android:id="@+id/kladnavetevrelestav"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/kladnavetevopakovacka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="1(vykoná se jednou)c[ms](za jak dlouho se zavolá podmínka)"
+                        android:inputType="textPersonName" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Podmínak nesplněna" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/zapornavetevrele"
+                            android:layout_width="103dp"
+                            android:layout_height="wrap_content" />
+
+                        <Spinner
+                            android:id="@+id/zapornavetevrelestav"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/zapornavetevopakovacka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="1(vykoná se jednou)c[ms](za jak dlouho se zavolá podmínka)"
+                        android:inputType="textPersonName" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>
