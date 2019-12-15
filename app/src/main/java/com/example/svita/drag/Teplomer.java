@@ -3,40 +3,24 @@ package com.example.svita.drag;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.text.InputType;
 import android.text.format.DateFormat;
 import android.text.method.PasswordTransformationMethod;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.example.svita.drag.nactiDataDoGrafu.HttpHandler;
 import com.example.svita.drag.nactiDataDoGrafu.vykresliGraf;
-import com.github.mikephil.charting.charts.LineChart;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,6 +71,23 @@ public class Teplomer extends Prvek {
         prosteVsecko=new UlozCoPujde("Teplomer","teplota");
         vlastnostiLayout=R.layout.activity_vlastnosti;
         funkcniLayout=R.layout.activity_funkce_prvku;
+    }
+    @Override
+    public boolean isPrvekRidici(){
+        return false;
+    }
+    @Override
+    public String coMaPrvekPodSebou(){
+        return "teplota:vlhkost";
+    }
+    @Override
+    public String dejMiPrikazivo(String coTimChcesDokazat){
+        String prikazNaMiru="";
+        if(coTimChcesDokazat.equals("teplota:vlhkost"))prikazNaMiru="t:v";
+        else if(coTimChcesDokazat.equals("teplota"))prikazNaMiru="t";
+        else if(coTimChcesDokazat.equals("vlhkost"))prikazNaMiru="v";
+
+        return prikazNaMiru;
     }
 
     @Override

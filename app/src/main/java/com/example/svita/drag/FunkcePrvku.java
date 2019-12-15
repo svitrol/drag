@@ -1,5 +1,6 @@
 package com.example.svita.drag;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,12 +16,20 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class FunkcePrvku extends AppCompatActivity {
-    Prvek kteryLeti=MainActivity.aktivni;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(kteryLeti.getFunkcniLayout());
-        kteryLeti.fachej(this);
+        if(MainActivity.aktivni!=null){
+            Prvek kteryLeti=MainActivity.aktivni;
+            setContentView(kteryLeti.getFunkcniLayout());
+            kteryLeti.fachej(this);
+        }
+        else {
+            Intent kolobezka=new Intent(this,MainActivity.class);
+            startActivity(kolobezka);
+        }
+
     }
 
 }

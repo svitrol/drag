@@ -1,15 +1,211 @@
 package com.example.svita.drag.vychytavkyprozasuvku;
 
+import android.arch.persistence.room.PrimaryKey;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.svita.drag.DbClient;
+import com.example.svita.drag.Kamera;
+import com.example.svita.drag.MainActivity;
+import com.example.svita.drag.Prvek;
 import com.example.svita.drag.R;
+import com.example.svita.drag.Teplomer;
+import com.example.svita.drag.UlozCoPujde;
+import com.example.svita.drag.Zarovka;
+import com.example.svita.drag.Zasuvka;
 
-public class tvorbaPodminky extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    AutoCompleteTextView hodnota1,hodnota2;
+    Spinner nerovnoxti,logika,zaprnavetevCoOvladnout,kladnavetevCoOvladnout;
+    RadioButton kladnaVteveZap,ZapornaVetevZap;
+    ArrayAdapter<String> napovednyAdapter;
+    LinearLayout rozhodovaciCast;
+    List<View> listakPodminkos=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tvorba_podminky);
+
+        rozhodovaciCast=findViewById(R.id.castRozhodovaci);
+        LayoutInflater inflater= (LayoutInflater) this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        View convertView = inflater.inflate(R.layout.podminkova_jednotka, null);
+        rozhodovaciCast.addView(convertView);
+
+        hodnota1=convertView.findViewById(R.id.actv);
+        hodnota2=convertView.findViewById(R.id.actv2);
+
+        nerovnoxti=convertView.findViewById(R.id.spinner);
+        logika=convertView.findViewById(R.id.spinner2);
+
+        zaprnavetevCoOvladnout=findViewById(R.id.zapornavetevrele);
+        kladnavetevCoOvladnout=findViewById(R.id.kladnavetevrele);
+
+        kladnaVteveZap=findViewById(R.id.radioButton3);
+        ZapornaVetevZap=findViewById(R.id.radioButton5);
+
+
+        listakPodminkos.add(convertView);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.znaminka, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        nerovnoxti.setAdapter(adapter);
+
+        nerovnoxti.setOnItemSelectedListener(this);
+
+        ArrayAdapter<CharSequence> pracka = ArrayAdapter.createFromResource(this,R.array.logickeOperatory, android.R.layout.simple_spinner_item);
+
+        pracka.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        logika.setAdapter(pracka);
+
+        logika.setOnItemSelectedListener(new PridejRadek(this));
+
+        dostanPrvky();
+        ArrayAdapter<String> OvaldanyRele = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,MainActivity.aktivni.coMaPrvekPodSebou().split(":"));
+        OvaldanyRele.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        zaprnavetevCoOvladnout.setAdapter(OvaldanyRele);
+        kladnavetevCoOvladnout.setAdapter(OvaldanyRele);
+    }
+    private void dostanPrvky(){
+        class dostanPrvky extends AsyncTask<Void, Void, List<UlozCoPujde>> {
+
+            @Override
+            protected List<UlozCoPujde> doInBackground(Void... voids) {
+                List<UlozCoPujde> komponenty = DbClient
+                        .getInstance(getApplicationContext())
+                        .getAppDatabase()
+                        .taskDao()
+                        .getAll();
+                return komponenty;
+            }
+
+            @Override
+            protected void onPostExecute(List<UlozCoPujde> tasks) {
+                super.onPostExecute(tasks);
+                //vraž tam ten list do layoutu
+                VrazTamTenListNapoved(tasks);
+            }
+        }
+
+        dostanPrvky gt = new dostanPrvky();
+        gt.execute();
+    }
+    private void VrazTamTenListNapoved(final List<UlozCoPujde> prvky){
+        //String[] countries =
+
+        napovednyAdapter = new ArrayAdapter<String>(this,R.layout.napovedna_polozka, R.id.text_view_list_item);
+        //System.out.println("hovado ");
+        for (UlozCoPujde jdnotka:prvky) {;
+            Prvek novy=null;
+            switch (jdnotka.getTypPrvku()){
+                case "Teplomer":{
+                    novy=new Teplomer();
+                    novy.setProsteVsecko(jdnotka);
+                    break;
+                }
+                case "Zarovka":{
+                    novy=new Zarovka();
+                    novy.setProsteVsecko(jdnotka);
+                    break;
+                }
+                case "Kamera":{
+                    novy=new Kamera();
+                    novy.setProsteVsecko(jdnotka);
+                    break;
+                }
+                case "Zasuvka":{
+                    novy=new Zasuvka();
+                    novy.setProsteVsecko(jdnotka);
+                    break;
+                }
+            }
+            if(!novy.isPrvekRidici()){
+                String[] coMaPodPalcem=novy.coMaPrvekPodSebou().split(":");
+                for (String vec:coMaPodPalcem) {
+                    napovednyAdapter.add(""+jdnotka.getId()+":"+jdnotka.getJmeno()+":"+vec);
+                }
+            }
+
+
+        }
+        //System.out.println("hovado konec ");
+        String[] veci=MainActivity.aktivni.coMaPrvekPodSebou().split(":");
+        for (String vec:veci) {
+            napovednyAdapter.add("TentoPrvek:"+vec);
+        }
+        hodnota1.setAdapter(napovednyAdapter);
+        hodnota2.setAdapter(napovednyAdapter);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        //Spinner vyberovka=(Spinner)view;
+        //vyberovka
+        //((TextView) parent.getChildAt(0)).setTextSize(15);
+        String[]znaminka={">","<","=","!=",">=","<="};
+        ((TextView) parent.getChildAt(0)).setText(znaminka[position]);
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+    class PridejRadek implements AdapterView.OnItemSelectedListener {
+        Context CoSeDeje;
+        public PridejRadek(Context CoSeDeje){
+            this.CoSeDeje=CoSeDeje;
+        }
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if(position==1||position==2){
+                String[]znaminka={"","&","|"};
+                ((TextView) parent.getChildAt(0)).setText(znaminka[position]);
+                LayoutInflater inflater= (LayoutInflater)CoSeDeje.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+                View convertView = inflater.inflate(R.layout.podminkova_jednotka, null);
+                rozhodovaciCast.addView(convertView);
+                hodnota1=convertView.findViewById(R.id.actv);
+                hodnota2=convertView.findViewById(R.id.actv2);
+                nerovnoxti=convertView.findViewById(R.id.spinner);
+                logika=convertView.findViewById(R.id.spinner2);
+                listakPodminkos.add(convertView);
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(CoSeDeje,
+                        R.array.znaminka, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                nerovnoxti.setAdapter(adapter);
+                nerovnoxti.setOnItemSelectedListener(tvorbaPodminky.this);
+                ArrayAdapter<CharSequence> pracka = ArrayAdapter.createFromResource(CoSeDeje,
+                        R.array.logickeOperatory, android.R.layout.simple_spinner_item);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                logika.setAdapter(pracka);
+                logika.setOnItemSelectedListener(this);
+            }
+
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
     }
 }

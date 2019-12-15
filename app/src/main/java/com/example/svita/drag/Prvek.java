@@ -162,6 +162,15 @@ public class Prvek{
         soradniceX=x;
         soradniceY=y;
     }
+    public boolean isPrvekRidici(){
+        return true;
+    }
+    public String coMaPrvekPodSebou(){
+        return "nic";
+    }
+    public String dejMiPrikazivo(String coTimChcesDokazat){
+        return "nic";
+    }
 
 
 

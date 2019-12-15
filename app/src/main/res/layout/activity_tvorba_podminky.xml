@@ -19,44 +19,16 @@
             app:layout_constraintStart_toStartOf="parent" >
 
             <LinearLayout
+                android:id="@+id/castRozhodovaci"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <AutoCompleteTextView
-                    android:id="@+id/actv"
-                    android:layout_width="155dp"
-                    android:layout_height="wrap_content"
-                    android:completionHint="Prvni část"
-                    android:completionThreshold="1"
-                    android:hint="Prvni část"
-                    android:popupBackground="@color/colorAccent" />
-
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="141dp"
-                    android:layout_height="45dp"
-                    android:layout_weight="1" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/actv2"
-                    android:layout_width="190dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:completionHint="Druhá část"
-                    android:completionThreshold="1"
-                    android:hint="Druhá část"
-                    android:popupBackground="@color/colorAccent" />
-
-                <Spinner
-                    android:id="@+id/spinner2"
-                    android:layout_width="141dp"
-                    android:layout_height="45dp"
-                    android:layout_weight="1" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/castPrikazovaci"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -82,24 +54,45 @@
                             android:layout_width="99dp"
                             android:layout_height="wrap_content" />
 
-                        <Spinner
-                            android:id="@+id/kladnavetevrelestav"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                        <RadioGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" >
+
+                            <RadioButton
+                                android:id="@+id/radioButton3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="true"
+                                android:text="On" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Off" />
+                        </RadioGroup>
 
                     </LinearLayout>
 
                     <EditText
                         android:id="@+id/kladnavetevopakovacka"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
                         android:hint="1(vykoná se jednou)c[ms](za jak dlouho se zavolá podmínka)"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="6dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/listDivider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -122,22 +115,37 @@
                             android:layout_width="103dp"
                             android:layout_height="wrap_content" />
 
-                        <Spinner
-                            android:id="@+id/zapornavetevrelestav"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                        <RadioGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" >
+
+                            <RadioButton
+                                android:id="@+id/radioButton5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:checked="true"
+                                android:text="On" />
+
+                            <RadioButton
+                                android:id="@+id/radioButton6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Off" />
+                        </RadioGroup>
 
                     </LinearLayout>
 
                     <EditText
                         android:id="@+id/zapornavetevopakovacka"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
                         android:hint="1(vykoná se jednou)c[ms](za jak dlouho se zavolá podmínka)"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
                 </LinearLayout>
             </LinearLayout>

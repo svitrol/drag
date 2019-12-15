@@ -193,6 +193,29 @@ public class Zasuvka extends Prvek {
 
     }
     @Override
+    public String coMaPrvekPodSebou(){
+        String mojeOvecky="";
+        switch (kolikZasuvek){
+            case 1:{
+                mojeOvecky="R1";
+                break;
+            }
+            case 2:{
+                mojeOvecky="R1:R2";
+                break;
+            }
+            case 4:{
+                mojeOvecky="R1:R2:R3:R4";
+                break;
+            }
+            case 8:{
+                mojeOvecky="R1:R2:R3:R4:R5:R6:R7:R8";
+                break;
+            }
+        }
+        return mojeOvecky;
+    }
+    @Override
     protected void fachej(Activity kdeToDelam){
         funkcnost facha=new funkcnost(kdeToDelam);
     }
