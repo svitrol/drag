@@ -10,7 +10,7 @@
         <item>Menší rovno</item>
     </string-array>
     <string-array name="logickeOperatory">
-        <item>Konec</item>
+        <item>X</item>
         <item>A zároveň</item>
         <item>Nebo</item>
     </string-array>

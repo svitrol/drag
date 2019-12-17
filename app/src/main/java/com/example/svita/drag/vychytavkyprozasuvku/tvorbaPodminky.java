@@ -1,20 +1,24 @@
 package com.example.svita.drag.vychytavkyprozasuvku;
 
-import android.arch.persistence.room.PrimaryKey;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,16 +32,20 @@ import com.example.svita.drag.UlozCoPujde;
 import com.example.svita.drag.Zarovka;
 import com.example.svita.drag.Zasuvka;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     AutoCompleteTextView hodnota1,hodnota2;
-    Spinner nerovnoxti,logika,zaprnavetevCoOvladnout,kladnavetevCoOvladnout;
-    RadioButton kladnaVteveZap,ZapornaVetevZap;
+    Spinner nerovnoxti,logika;
+    LinearLayout zaprnavetevCoOvladnout,kladnavetevCoOvladnout;
+    CheckBox kladnaVtevevicerosPinos,zapornaVetevVicerosPinos;
     ArrayAdapter<String> napovednyAdapter;
     LinearLayout rozhodovaciCast;
     List<View> listakPodminkos=new ArrayList<>();
+    List<View> listakofPinosKladnos=new ArrayList<>();
+    List<View> listakoPinosZaporos=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +63,28 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         nerovnoxti=convertView.findViewById(R.id.spinner);
         logika=convertView.findViewById(R.id.spinner2);
 
-        zaprnavetevCoOvladnout=findViewById(R.id.zapornavetevrele);
-        kladnavetevCoOvladnout=findViewById(R.id.kladnavetevrele);
+        zaprnavetevCoOvladnout=findViewById(R.id.zaporenavetev);
+        kladnavetevCoOvladnout=findViewById(R.id.kladackavetev);
 
-        kladnaVteveZap=findViewById(R.id.radioButton3);
-        ZapornaVetevZap=findViewById(R.id.radioButton5);
+        kladnaVtevevicerosPinos=findViewById(R.id.kladnycheckBox);
+        zapornaVetevVicerosPinos=findViewById(R.id.zapornycheckBox);
+
+        kladnaVtevevicerosPinos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                kladnavetevCoOvladnout.removeAllViews();
+                listakofPinosKladnos=NahodTamTenVyberos(kladnavetevCoOvladnout,isChecked);
+            }
+        });
+
+        zapornaVetevVicerosPinos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                zaprnavetevCoOvladnout.removeAllViews();
+                listakoPinosZaporos=NahodTamTenVyberos(zaprnavetevCoOvladnout,isChecked);
+            }
+        });
+
 
 
         listakPodminkos.add(convertView);
@@ -78,10 +103,103 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         logika.setOnItemSelectedListener(new PridejRadek(this));
 
         dostanPrvky();
-        ArrayAdapter<String> OvaldanyRele = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,MainActivity.aktivni.coMaPrvekPodSebou().split(":"));
-        OvaldanyRele.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        zaprnavetevCoOvladnout.setAdapter(OvaldanyRele);
-        kladnavetevCoOvladnout.setAdapter(OvaldanyRele);
+
+        listakoPinosZaporos=NahodTamTenVyberos(zaprnavetevCoOvladnout,false);
+        listakofPinosKladnos=NahodTamTenVyberos(kladnavetevCoOvladnout,false);
+
+
+    }
+    private String DostanZtohoPiny(List<View> listonos, EditText coasovac){
+        String vysledek="";
+        if(listonos.size()==1){
+            Spinner vyberovkaPinu=listonos.get(0).findViewById(R.id.rele);
+            RadioGroup hodnota=listonos.get(0).findViewById(R.id.stavy);
+            vysledek=((TextView)vyberovkaPinu.getSelectedView()).getText().toString()+":";
+            switch(hodnota.getCheckedRadioButtonId()){
+                case R.id.on:{
+                    vysledek+="1";
+                    break;
+                }
+                case R.id.off:{
+                    vysledek+="0";
+                    break;
+                }
+            }
+
+        }
+        else {
+            vysledek="P";
+            for(View pinator:listonos){
+                RadioGroup hodnota=pinator.findViewById(R.id.stavy);
+                switch(hodnota.getCheckedRadioButtonId()){
+                    case R.id.on:{
+                        vysledek+="1";
+                        break;
+                    }
+                    case R.id.off:{
+                        vysledek+="0";
+                        break;
+                    }
+                    case R.id.nedifnovan:{
+                        vysledek+="X";
+                        break;
+                    }
+                }
+            }
+
+        }
+        vysledek+=":"+coasovac.getText().toString();
+        return vysledek;
+    }
+    private Podminkos prectiTvarPodminky(){
+        List <Vyraz> vyrazivoNaVyhodnoceni=new ArrayList<>();
+        for(View podminkovaJednotka:listakPodminkos){
+            Spinner znaminkaNerovnosti,LogickyeOperatory;
+            AutoCompleteTextView prvniCast,DruhaCast;
+            znaminkaNerovnosti=podminkovaJednotka.findViewById(R.id.spinner);
+            LogickyeOperatory=podminkovaJednotka.findViewById(R.id.spinner2);
+            prvniCast=podminkovaJednotka.findViewById(R.id.actv);
+            DruhaCast=podminkovaJednotka.findViewById(R.id.actv2);
+            Vyraz hlavicka=new Vyraz(prvniCast.getText().toString(),DruhaCast.getText().toString(),((TextView)znaminkaNerovnosti.getSelectedView()).getText().toString(),((TextView)LogickyeOperatory.getSelectedView()).getText().toString());
+            vyrazivoNaVyhodnoceni.add(hlavicka);
+        }
+        EditText kladnycas=findViewById(R.id.kladnyeditText);
+        EditText zapornycas=findViewById(R.id.zapornyeditText);
+
+        Podminkos chobotnicka=new Podminkos(DostanZtohoPiny(listakofPinosKladnos,kladnycas),DostanZtohoPiny(listakoPinosZaporos,zapornycas),vyrazivoNaVyhodnoceni);
+        return chobotnicka;
+    }
+    public void podminkaJeHotova(View v){
+        Intent intent=new Intent();
+        intent.putExtra("Podminkos",prectiTvarPodminky());
+
+        setResult(Activity.RESULT_OK,intent);
+        finish();
+    }
+    private List<View> NahodTamTenVyberos(LinearLayout kdeJsem,boolean viceroPinos){
+        List<View> veslednyListak=new ArrayList<>();
+        if(viceroPinos){
+            for (String pinos:MainActivity.aktivni.coMaPrvekPodSebou().split(":")) {
+                LayoutInflater inflater= (LayoutInflater)this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+                View convertView = inflater.inflate(R.layout.nastacenivicenezjednoho_pinu, null);
+                ((TextView)convertView.findViewById(R.id.rele)).setText(pinos);
+                kdeJsem.addView(convertView);
+                veslednyListak.add(convertView);
+
+            }
+        }
+        else {
+            ArrayAdapter<String> OvaldanyRele = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,MainActivity.aktivni.coMaPrvekPodSebou().split(":"));
+            OvaldanyRele.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            LayoutInflater inflater= (LayoutInflater)this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+            View convertView = inflater.inflate(R.layout.nastavenipinu_zasuvky, null);
+            Spinner vyberovkaPinu=convertView.findViewById(R.id.rele);
+            vyberovkaPinu.setAdapter(OvaldanyRele);
+            kdeJsem.addView(convertView);
+            veslednyListak.add(convertView);
+
+        }
+        return veslednyListak;
     }
     private void dostanPrvky(){
         class dostanPrvky extends AsyncTask<Void, Void, List<UlozCoPujde>> {
@@ -140,6 +258,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
                 String[] coMaPodPalcem=novy.coMaPrvekPodSebou().split(":");
                 for (String vec:coMaPodPalcem) {
                     napovednyAdapter.add(""+jdnotka.getId()+":"+jdnotka.getJmeno()+":"+vec);
+
                 }
             }
 
@@ -162,6 +281,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         //((TextView) parent.getChildAt(0)).setTextSize(15);
         String[]znaminka={">","<","=","!=",">=","<="};
         ((TextView) parent.getChildAt(0)).setText(znaminka[position]);
+        ((TextView) parent.getChildAt(0)).setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }
@@ -180,11 +300,14 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
             if(position==1||position==2){
                 String[]znaminka={"","&","|"};
                 ((TextView) parent.getChildAt(0)).setText(znaminka[position]);
+                ((TextView) parent.getChildAt(0)).setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
                 LayoutInflater inflater= (LayoutInflater)CoSeDeje.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
                 View convertView = inflater.inflate(R.layout.podminkova_jednotka, null);
                 rozhodovaciCast.addView(convertView);
                 hodnota1=convertView.findViewById(R.id.actv);
                 hodnota2=convertView.findViewById(R.id.actv2);
+                hodnota1.setAdapter(napovednyAdapter);
+                hodnota2.setAdapter(napovednyAdapter);
                 nerovnoxti=convertView.findViewById(R.id.spinner);
                 logika=convertView.findViewById(R.id.spinner2);
                 listakPodminkos.add(convertView);
@@ -209,3 +332,4 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         }
     }
 }
+
