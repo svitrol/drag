@@ -17,9 +17,9 @@ public class PodminkovyAdaptos extends RecyclerView.Adapter<PodminkovyAdaptos.Po
 
     private Context mCtx;
     private List<Podminkos> PodminksListos;
-    private View.OnClickListener hracka;
+    private kliklItem hracka;
 
-    public PodminkovyAdaptos(Context mCtx, List<Podminkos> podminksListos,View.OnClickListener hracka) {
+    public PodminkovyAdaptos(Context mCtx, List<Podminkos> podminksListos,kliklItem hracka) {
         this.mCtx = mCtx;
         PodminksListos = podminksListos;
         this.hracka=hracka;
@@ -50,21 +50,30 @@ public class PodminkovyAdaptos extends RecyclerView.Adapter<PodminkovyAdaptos.Po
         return PodminksListos.size();
     }
 
-    class PodminkossViewHolder extends RecyclerView.ViewHolder {
+    class PodminkossViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView podminka,vyraz,prikaz;
-
-        public PodminkossViewHolder(View itemView, View.OnClickListener hracka) {
+        kliklItem kliklItem;
+        public PodminkossViewHolder(View itemView,kliklItem kliknuti) {
             super(itemView);
             podminka = itemView.findViewById(R.id.nazevPodminky);
             vyraz = itemView.findViewById(R.id.podminka);
             prikaz = itemView.findViewById(R.id.prikazy);
+            kliklItem=kliknuti;
 
-            itemView.setOnClickListener(hracka);
-
+            itemView.setOnClickListener(this);
 
         }
 
 
+        @Override
+        public void onClick(View v) {
+            int i=getLayoutPosition();
+            kliklItem.vowKliknuti(i,v);
+
+        }
+
     }
+
 }
+

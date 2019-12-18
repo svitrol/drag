@@ -22,6 +22,7 @@ public class makraZasuvky extends AppCompatActivity {
     private static final int PODMINKOS_SPLNENOS = 1000;
     List<Podminkos> listakos=new ArrayList<>();
     RecyclerView recyklac;
+    int kliklaPodminka;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +51,37 @@ public class makraZasuvky extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        kliklaPodminka=-1;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode==PODMINKOS_SPLNENOS)
+        if(requestCode==PODMINKOS_SPLNENOS&&resultCode==RESULT_OK)
         {
-            listakos.add((Podminkos)data.getSerializableExtra("Podminkos"));
-            PodminkovyAdaptos adapter = new PodminkovyAdaptos(makraZasuvky.this, listakos, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(makraZasuvky.this,"Dobrý výběr ",Toast.LENGTH_SHORT).show();
+            Podminkos vysledkos=(Podminkos)data.getSerializableExtra("Podminkos");
+            if(kliklaPodminka!=-1){
+                listakos.remove(kliklaPodminka);
+                if(vysledkos!=null){
+                    listakos.add(kliklaPodminka,vysledkos);
                 }
-            });
-            recyklac.setAdapter(adapter);
-            recyklac.getAdapter().notifyDataSetChanged();
-            Toast.makeText(makraZasuvky.this,listakos.get(listakos.size()-1).getKladnyPrikaz(),Toast.LENGTH_LONG).show();
+                kliklaPodminka=-1;
+                recyklac.getAdapter().notifyDataSetChanged();
+            }
+            else if(vysledkos!=null){
+                listakos.add(vysledkos);
+                PodminkovyAdaptos adapter = new PodminkovyAdaptos(makraZasuvky.this, listakos, new kliklItem(){
+                    @Override
+                    public void vowKliknuti(int pozice, View view){
+                        kliklaPodminka=pozice;
+                        Intent intent=new Intent(makraZasuvky.this,tvorbaPodminky.class);
+                        intent.putExtra("Podminkos",listakos.get(pozice));
+                        startActivityForResult(intent, PODMINKOS_SPLNENOS);
+                    }
+                });
+                recyklac.setAdapter(adapter);
+                recyklac.getAdapter().notifyDataSetChanged();
+            }
+
         }
     }
 }
