@@ -10,7 +10,11 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="FATAL" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+  </component>
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/makraZasuvky.java" line="466" />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -39,63 +43,66 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/tvorbaPodminky.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="78" column="90" selection-start-line="78" selection-start-column="90" selection-end-line="78" selection-end-column="90" />
+            <state relative-caret-position="637">
+              <caret line="323" column="50" selection-start-line="323" selection-start-column="33" selection-end-line="323" selection-end-column="50" />
               <folding>
                 <element signature="method#DostanZtohoPiny#0;class#tvorbaPodminky#0" />
-                <element signature="method#prectiTvarPodminky#0;class#tvorbaPodminky#0" />
                 <element signature="method#podminkaJeHotova#0;class#tvorbaPodminky#0" />
                 <element signature="method#zahodji#0;class#tvorbaPodminky#0" />
-                <element signature="method#NahodTamTenVyberos#0;class#tvorbaPodminky#0" />
-                <element signature="method#NahodTamTenVyberos#1;class#tvorbaPodminky#0" />
-                <element signature="method#VrazTamTenListNapoved#0;class#tvorbaPodminky#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nastacenivicenezjednoho_pinu.xml">
-          <provider selected="true" editor-type-id="android-designer2" />
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="40" column="38" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/makraZasuvky.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="986">
-              <caret line="80" column="45" selection-start-line="80" selection-start-column="45" selection-end-line="80" selection-end-column="45" />
+            <state relative-caret-position="283">
+              <caret line="487" column="25" lean-forward="true" selection-start-line="487" selection-start-column="25" selection-end-line="487" selection-end-column="25" />
               <folding>
-                <element signature="e#2512#2691#0" expanded="true" />
-                <element signature="e#2690#2691#0" expanded="true" />
+                <element signature="method#DostanFormatovanyTvarZpravyProModul#0;class#makraZasuvky#0" />
+                <element signature="method#vkladejNovyPrvky#0;class#makraZasuvky#0" />
+                <element signature="e#7817#8034#0" expanded="true" />
+                <element signature="e#8033#8034#0" expanded="true" />
+                <element signature="method#formatovanaStranaVyrazu#0;class#makraZasuvky#0" />
+                <element signature="e#11403#11845#0" expanded="true" />
+                <element signature="e#11844#11845#0" expanded="true" />
+                <element signature="class#odesliMakro#0;class#makraZasuvky#0" />
+                <element signature="e#17849#18168#0" expanded="true" />
+                <element signature="e#18167#18168#0" expanded="true" />
+                <element signature="e#20412#20822#0" expanded="true" />
+                <element signature="e#20821#20822#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/karta_podminky.xml">
-          <provider selected="true" editor-type-id="android-designer2" />
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Zasuvka.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2813">
+              <caret line="310" column="23" selection-start-line="310" selection-start-column="23" selection-end-line="310" selection-end-column="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#nastavSiVlastnosti#0;class#Zasuvka#0" />
+                <element signature="method#vemSiCoPotrebujes#0;class#Zasuvka#0" />
+                <element signature="method#NaplnProsteVsecko#0;class#Zasuvka#0" />
+                <element signature="method#VemSiToZpatky#0;class#Zasuvka#0" />
+                <element signature="method#posli#0;class#funkcnost#0;class#Zasuvka#0" />
+                <element signature="class#Thread2#0;class#funkcnost#0;class#Zasuvka#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_tvorba_podminky.xml">
-          <provider selected="true" editor-type-id="android-designer2" />
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="120" column="45" selection-start-line="120" selection-start-column="45" selection-end-line="120" selection-end-column="45" />
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="34" column="57" selection-start-line="34" selection-start-column="57" selection-end-line="34" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -103,8 +110,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/PodminkovyAdaptos.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="71" column="29" selection-start-line="71" selection-start-column="29" selection-end-line="71" selection-end-column="29" />
+            <state relative-caret-position="731">
+              <caret line="43" column="68" selection-start-line="43" selection-start-column="68" selection-end-line="43" selection-end-column="68" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -123,18 +130,18 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_makra_zasuvky.xml">
-          <provider selected="true" editor-type-id="android-designer2" />
           <provider editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_makra_zasuvky.xml">
-          <provider selected="true" editor-type-id="android-designer2" />
           <provider editor-type-id="text-editor">
             <state relative-caret-position="255">
               <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
             </state>
           </provider>
+          <provider selected="true" editor-type-id="android-designer2" />
         </entry>
       </file>
     </leaf>
@@ -192,11 +199,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/nactiDataDoGrafu/tvorbaPodminky.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/napovedna_polozka.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Prvek.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Zasuvka.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Teplomer.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/prvke.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/FunkcePrvku.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/podminkova_jednotka.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/nastavenipinu_zasuvky.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/nastacenivicenezjednoho_pinu.xml" />
@@ -207,10 +211,13 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/karta_podminky.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/PodminkovyAdaptos.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/kliklItem.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/makraZasuvky.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_tvorba_podminky.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Teplomer.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Zasuvka.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/tvorbaPodminky.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/makraZasuvky.java" />
       </list>
     </option>
   </component>
@@ -225,49 +232,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="drag" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="drag" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="drag" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="drag" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="drag" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="drag" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="vychytavkyprozasuvku" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="drag" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="drag" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -416,39 +384,6 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09328358" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Captures" order="2" side_tool="true" weight="0.25" />
-      <window_info id="Designer" order="3" />
-      <window_info id="Build Variants" order="4" side_tool="true" />
-      <window_info id="Image Layers" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info id="Resources Explorer" order="8" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32827735" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.4978678" weight="0.32827735" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" weight="0.32936078" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5021322" side_tool="true" weight="0.32827735" />
-      <window_info anchor="bottom" id="Logcat" order="10" weight="0.32827735" />
-      <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.32827735" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="right" id="Preview" order="4" />
-      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" />
-      <window_info anchor="right" id="Gradle" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
-    </layout>
-    <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" weight="0.09328358" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Captures" order="2" side_tool="true" weight="0.25" />
@@ -465,8 +400,41 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.4978678" visible="true" weight="0.32827735" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.4978678" weight="0.32827735" />
       <window_info anchor="bottom" id="Android Profiler" order="8" weight="0.32936078" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5021322" side_tool="true" weight="0.32827735" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="10" visible="true" weight="0.32827735" />
+      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.32827735" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="right" id="Preview" order="4" />
+      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" />
+      <window_info anchor="right" id="Gradle" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09328358" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Captures" order="2" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="3" />
+      <window_info id="Build Variants" order="4" side_tool="true" />
+      <window_info id="Image Layers" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info id="Resources Explorer" order="8" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32827735" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.4978678" visible="true" weight="0.32827735" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5021322" side_tool="true" weight="0.32827735" />
       <window_info anchor="bottom" id="Logcat" order="10" weight="0.32827735" />
       <window_info anchor="bottom" id="Version Control" order="11" />
@@ -605,16 +573,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/UlozCoPujde.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="25" column="18" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/nactiDataDoGrafu/vykresliGraf.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -652,57 +610,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Prvek.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
-          <caret line="203" column="26" selection-start-line="203" selection-start-column="26" selection-end-line="203" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1400#1401#0" expanded="true" />
-            <element signature="e#1436#1437#0" expanded="true" />
-            <element signature="e#1899#1996#0" />
-            <element signature="e#2006#2877#0" />
-            <element signature="e#3939#4045#0" />
-            <element signature="e#4051#4148#0" />
-            <element signature="e#4392#4393#0" expanded="true" />
-            <element signature="e#4418#4419#0" expanded="true" />
-            <element signature="e#4451#4452#0" expanded="true" />
-            <element signature="e#4475#4476#0" expanded="true" />
-            <element signature="e#4532#4533#0" expanded="true" />
-            <element signature="e#4556#4557#0" expanded="true" />
-            <element signature="e#4428#5048#0" />
-            <element signature="e#5620#6964#0" />
-            <element signature="e#6969#7653#0" />
-            <element signature="e#7658#8343#0" />
-            <element signature="e#8348#9374#0" />
-            <element signature="class#8385:9307" />
-            <element signature="e#9379#9474#0" />
-            <element signature="e#9479#9781#0" />
-            <element signature="e#9786#10082#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/b7df7f4928ae19a553353f8392b64ff3/jars/classes.jar!/android/support/v7/app/AppCompatActivity.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
           <caret line="125" column="30" selection-start-line="125" selection-start-column="30" selection-end-line="125" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Teplomer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="83" column="11" selection-start-line="83" selection-start-column="11" selection-end-line="83" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#nastavSiVlastnosti#0;class#Teplomer#0" />
-            <element signature="method#vemSiCoPotrebujes#0;class#Teplomer#0" />
-            <element signature="method#NaplnProsteVsecko#0;class#Teplomer#0" />
-            <element signature="method#VemSiToZpatky#0;class#Teplomer#0" />
-            <element signature="class#Thread1#0;class#funkcnost#0;class#Teplomer#0" />
-            <element signature="class#Thread3#0;class#funkcnost#0;class#Teplomer#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -726,22 +637,6 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Zasuvka.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1207">
-          <caret line="195" column="11" selection-start-line="195" selection-start-column="11" selection-end-line="195" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#nastavSiVlastnosti#0;class#Zasuvka#0" />
-            <element signature="method#vemSiCoPotrebujes#0;class#Zasuvka#0" />
-            <element signature="method#NaplnProsteVsecko#0;class#Zasuvka#0" />
-            <element signature="method#VemSiToZpatky#0;class#Zasuvka#0" />
-            <element signature="method#posli#0;class#funkcnost#0;class#Zasuvka#0" />
-            <element signature="class#Thread3#0;class#funkcnost#0;class#Zasuvka#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -772,13 +667,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="103" selection-start-line="1" selection-start-column="45" selection-end-line="1" selection-end-column="103" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -836,51 +724,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/PodminkovyAdaptos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="71" column="29" selection-start-line="71" selection-start-column="29" selection-end-line="71" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/kliklItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="50" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/karta_podminky.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_makra_zasuvky.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
-      <provider editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_makra_zasuvky.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_tvorba_podminky.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="120" column="45" selection-start-line="120" selection-start-column="45" selection-end-line="120" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -904,29 +747,143 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/makraZasuvky.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/karta_podminky.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="39" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_tvorba_podminky.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="2040">
+          <caret line="120" column="45" selection-start-line="120" selection-start-column="45" selection-end-line="120" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Prvek.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="986">
-          <caret line="80" column="45" selection-start-line="80" selection-start-column="45" selection-end-line="80" selection-end-column="45" />
+        <state relative-caret-position="335">
+          <caret line="170" column="25" selection-start-line="170" selection-start-column="25" selection-end-line="170" selection-end-column="25" />
           <folding>
-            <element signature="e#2512#2691#0" expanded="true" />
-            <element signature="e#2690#2691#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1436#1437#0" expanded="true" />
+            <element signature="e#1899#1996#0" />
+            <element signature="e#2006#2877#0" />
+            <element signature="e#3939#4045#0" />
+            <element signature="e#4051#4148#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/UlozCoPujde.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="18" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Teplomer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="196" column="30" selection-start-line="196" selection-start-column="8" selection-end-line="196" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#nastavSiVlastnosti#0;class#Teplomer#0" />
+            <element signature="method#vemSiCoPotrebujes#0;class#Teplomer#0" />
+            <element signature="method#NaplnProsteVsecko#0;class#Teplomer#0" />
+            <element signature="method#VemSiToZpatky#0;class#Teplomer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="57" selection-start-line="34" selection-start-column="57" selection-end-line="34" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/kliklItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="50" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_makra_zasuvky.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_makra_zasuvky.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/Zasuvka.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2813">
+          <caret line="310" column="23" selection-start-line="310" selection-start-column="23" selection-end-line="310" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#nastavSiVlastnosti#0;class#Zasuvka#0" />
+            <element signature="method#vemSiCoPotrebujes#0;class#Zasuvka#0" />
+            <element signature="method#NaplnProsteVsecko#0;class#Zasuvka#0" />
+            <element signature="method#VemSiToZpatky#0;class#Zasuvka#0" />
+            <element signature="method#posli#0;class#funkcnost#0;class#Zasuvka#0" />
+            <element signature="class#Thread2#0;class#funkcnost#0;class#Zasuvka#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/PodminkovyAdaptos.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="43" column="68" selection-start-line="43" selection-start-column="68" selection-end-line="43" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/tvorbaPodminky.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="78" column="90" selection-start-line="78" selection-start-column="90" selection-end-line="78" selection-end-column="90" />
+        <state relative-caret-position="637">
+          <caret line="323" column="50" selection-start-line="323" selection-start-column="33" selection-end-line="323" selection-end-column="50" />
           <folding>
             <element signature="method#DostanZtohoPiny#0;class#tvorbaPodminky#0" />
-            <element signature="method#prectiTvarPodminky#0;class#tvorbaPodminky#0" />
             <element signature="method#podminkaJeHotova#0;class#tvorbaPodminky#0" />
             <element signature="method#zahodji#0;class#tvorbaPodminky#0" />
-            <element signature="method#NahodTamTenVyberos#0;class#tvorbaPodminky#0" />
-            <element signature="method#NahodTamTenVyberos#1;class#tvorbaPodminky#0" />
-            <element signature="method#VrazTamTenListNapoved#0;class#tvorbaPodminky#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/svita/drag/vychytavkyprozasuvku/makraZasuvky.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="487" column="25" lean-forward="true" selection-start-line="487" selection-start-column="25" selection-end-line="487" selection-end-column="25" />
+          <folding>
+            <element signature="method#DostanFormatovanyTvarZpravyProModul#0;class#makraZasuvky#0" />
+            <element signature="method#vkladejNovyPrvky#0;class#makraZasuvky#0" />
+            <element signature="e#7817#8034#0" expanded="true" />
+            <element signature="e#8033#8034#0" expanded="true" />
+            <element signature="method#formatovanaStranaVyrazu#0;class#makraZasuvky#0" />
+            <element signature="e#11403#11845#0" expanded="true" />
+            <element signature="e#11844#11845#0" expanded="true" />
+            <element signature="class#odesliMakro#0;class#makraZasuvky#0" />
+            <element signature="e#17849#18168#0" expanded="true" />
+            <element signature="e#18167#18168#0" expanded="true" />
+            <element signature="e#20412#20822#0" expanded="true" />
+            <element signature="e#20821#20822#0" expanded="true" />
           </folding>
         </state>
       </provider>

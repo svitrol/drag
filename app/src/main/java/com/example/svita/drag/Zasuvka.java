@@ -366,7 +366,7 @@ public class Zasuvka extends Prvek {
                             kdeToDelam.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(kdeToDelam," prisla "+message,Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(kdeToDelam," prisla "+message,Toast.LENGTH_LONG).show();
                                     if(message.contains("ok")){
                                         dosloOk=true;
                                         if(aktivni.getHint().toString().equals("ON")){

@@ -316,7 +316,8 @@ public class Teplomer extends Prvek {
                 while (true) {
                     try {
                         final String message = input.readLine();
-                        if (!message.isEmpty()) {
+                        if(message==null){}
+                        else if (!message.isEmpty()) {
                             kdeToDelam.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

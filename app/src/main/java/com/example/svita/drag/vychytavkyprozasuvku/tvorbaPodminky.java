@@ -68,6 +68,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         Intent jeTamNejaky=this.getIntent();
         Podminkos nejaka=(Podminkos) jeTamNejaky.getSerializableExtra("Podminkos");
         if(nejaka!=null){
+
             PridejRadek nadelMi=new PridejRadek(this);
             List<String> znaminkos= Arrays.asList(">", "<", "=", "!=", ">=", "<=");
             List<String> operatoros=Arrays.asList("X","&","|");
@@ -77,7 +78,6 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
                 nadelMi.hodnota2.setText(radka.getDruhacast());
                 nadelMi.nerovnoxti.setSelection(znaminkos.indexOf(radka.getNerovnost()));
                 nadelMi.logika.setSelection(operatoros.indexOf(radka.getLogikaNaKonci()));
-
             }
             EditText kladnycas=findViewById(R.id.kladnyeditText);
             EditText zapornycas=findViewById(R.id.zapornyeditText);
@@ -143,6 +143,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
             DruhaCast=podminkovaJednotka.findViewById(R.id.actv2);
             Vyraz hlavicka=new Vyraz(prvniCast.getText().toString(),DruhaCast.getText().toString(),((TextView)znaminkaNerovnosti.getSelectedView()).getText().toString(),((TextView)LogickyeOperatory.getSelectedView()).getText().toString());
             vyrazivoNaVyhodnoceni.add(hlavicka);
+            if(((TextView)LogickyeOperatory.getSelectedView()).getText().equals("X"))break;
         }
         EditText kladnycas=findViewById(R.id.kladnyeditText);
         EditText zapornycas=findViewById(R.id.zapornyeditText);
@@ -312,12 +313,10 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
             if(!novy.isPrvekRidici()){
                 String[] coMaPodPalcem=novy.coMaPrvekPodSebou().split(":");
                 for (String vec:coMaPodPalcem) {
-                    napovednyAdapter.add(""+jdnotka.getId()+":"+jdnotka.getJmeno()+":"+vec);
+                    napovednyAdapter.add(""+jdnotka.getId()+": "+jdnotka.getJmeno()+" :"+vec);
 
                 }
             }
-
-
         }
         //System.out.println("hovado konec ");
         String[] veci=MainActivity.aktivni.coMaPrvekPodSebou().split(":");
@@ -336,7 +335,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         ((TextView) parent.getChildAt(0)).setText(znaminka[position]);
         ((TextView) parent.getChildAt(0)).setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+       //Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -356,7 +355,8 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
                 String[]znaminka={"","&","|"};
                 ((TextView) parent.getChildAt(0)).setText(znaminka[position]);
                 ((TextView) parent.getChildAt(0)).setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
-                novyRadek();
+                if(listakPodminkos.indexOf(view.getParent().getParent())==listakPodminkos.size()-1)novyRadek();
+
             }
 
 
@@ -376,11 +376,11 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
                     R.array.znaminka, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             nerovnoxti.setAdapter(adapter);
-            nerovnoxti.setOnItemSelectedListener(tvorbaPodminky.this);
             ArrayAdapter<CharSequence> pracka = ArrayAdapter.createFromResource(CoSeDeje,
                     R.array.logickeOperatory, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             logika.setAdapter(pracka);
+            nerovnoxti.setOnItemSelectedListener(tvorbaPodminky.this);
             logika.setOnItemSelectedListener(this);
         }
 
