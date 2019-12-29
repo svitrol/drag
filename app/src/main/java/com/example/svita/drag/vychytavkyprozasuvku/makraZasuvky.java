@@ -449,7 +449,7 @@ public class makraZasuvky extends AppCompatActivity {
                 String[] Senzory=hlavniCasti[0].split(";");
                 Senzory[0]=Senzory[0].substring(1);
                 List<Prvek> coJeTamPouzito=new ArrayList<>();
-                if(Senzory[0].charAt(1)!='t'){
+                if(Senzory[0].charAt(0)!='t'){
                     for(String senzornik:Senzory){
                         final String uzFaktNevimJakToPojmenovat=senzornik.split("\\[")[0];
                         final Prvek pouzity= Iterables.tryFind(prvkySeKterymiBychMohlPracovat, new Predicate<Prvek>() {
@@ -495,18 +495,19 @@ public class makraZasuvky extends AppCompatActivity {
                     String[] prikazy=castiPodminky[1].split("-");
                     listakos.add(new Podminkos(prikazy[0],prikazy[1],vyrazivo));
                 }
+                PodminkovyAdaptos adapter = new PodminkovyAdaptos(makraZasuvky.this, listakos, new kliklItem(){
+                    @Override
+                    public void vowKliknuti(int pozice, View view){
+                        kliklaPodminka=pozice;
+                        Intent intent=new Intent(makraZasuvky.this,tvorbaPodminky.class);
+                        intent.putExtra("Podminkos",listakos.get(pozice));
+                        startActivityForResult(intent, PODMINKOS_SPLNENOS);
+                    }
+                });
+                recyklac.setAdapter(adapter);
+                recyklac.getAdapter().notifyDataSetChanged();
             }
-            PodminkovyAdaptos adapter = new PodminkovyAdaptos(makraZasuvky.this, listakos, new kliklItem(){
-                @Override
-                public void vowKliknuti(int pozice, View view){
-                    kliklaPodminka=pozice;
-                    Intent intent=new Intent(makraZasuvky.this,tvorbaPodminky.class);
-                    intent.putExtra("Podminkos",listakos.get(pozice));
-                    startActivityForResult(intent, PODMINKOS_SPLNENOS);
-                }
-            });
-            recyklac.setAdapter(adapter);
-            recyklac.getAdapter().notifyDataSetChanged();
+
         }
 
     }

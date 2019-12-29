@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.svita.drag.nactiDataDoGrafu.vykresliGraf;
+import com.example.svita.drag.vychytavkyprozasuvku.RelePresDb;
 import com.example.svita.drag.vychytavkyprozasuvku.makraZasuvky;
 
 import java.io.BufferedReader;
@@ -24,6 +25,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import android.os.Handler;
 
 public class Zasuvka extends Prvek {
     public Zasuvka() {
@@ -229,6 +231,8 @@ public class Zasuvka extends Prvek {
         boolean poslalJsem=false,dosloOk=false;
         Button aktivni=null,Makra;
         Button[]pole=new Button[8];
+        Handler handeler=new Handler();
+        RelePresDb jenKdyzToNejdePrimo;
         public  funkcnost(final Activity kdeToDelam){
             this.kdeToDelam=kdeToDelam;
             pole[0]=kdeToDelam.findViewById(R.id.Z1);
@@ -243,7 +247,14 @@ public class Zasuvka extends Prvek {
             infosaurus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new Thread(new Thread3("RX:?")).start();
+                    if(pripojen){
+                        new Thread(new Thread3("RX:?")).start();
+                    }
+                    else {
+                        jenKdyzToNejdePrimo=new RelePresDb(getDb(),getDbjmeno(),getDbheslo(),pole,kolikZasuvek);
+                        jenKdyzToNejdePrimo.execute("stav");
+                    }
+
                 }
             });
 
@@ -277,6 +288,7 @@ public class Zasuvka extends Prvek {
             }
             Thread1 = new Thread(new Thread1());
             Thread1.start();
+            //handeler.postDelayed(new Thread3("RX:?"), 1000);
             for(int i=0;i<kolikZasuvek;i++){
                 pole[i].setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -293,9 +305,6 @@ public class Zasuvka extends Prvek {
                     zacniAktivituProNoveMakro(kdeToDelam);
                 }
             });
-
-
-
         }
         private void zacniAktivituProNoveMakro(final Activity kdeToDelam){
             ArrayList<CharSequence> lisovniTajemstvi=new ArrayList<>();
@@ -311,11 +320,11 @@ public class Zasuvka extends Prvek {
             return "0";
         }
         public void posli(View v) {
+            boolean stavator=true;
+            if(((Button)v).getHint().toString().equals("ON")){
+                stavator=false;
+            }
             if(pripojen){
-                boolean stavator=true;
-                if(((Button)v).getHint().toString().equals("ON")){
-                    stavator=false;
-                }
                 if(poslalJsem&&dosloOk||!poslalJsem){
                     String zprava="R"+((Button)v).getText().charAt(1)+":"+stav(stavator);
                     new Thread(new Thread3(zprava)).start();
@@ -323,6 +332,14 @@ public class Zasuvka extends Prvek {
                     dosloOk=false;
                     aktivni=(Button)v;
                 }
+            }
+            else {
+                String[] polish={"update","N","N","N","N","N","N","N","N",((Button)v).getText().toString()};
+                int i=((Button)v).getText().charAt(1)-48;
+                polish[i]=stav(stavator);
+                jenKdyzToNejdePrimo=new RelePresDb(getDb(),getDbjmeno(),getDbheslo(),pole,kolikZasuvek);
+                jenKdyzToNejdePrimo.execute(polish);
+
             }
 
 
@@ -428,15 +445,16 @@ public class Zasuvka extends Prvek {
             }
             @Override
             public void run() {
-                output.write(message);
-                output.flush();
-                //Toast.makeText(kdeToDelam,message,Toast.LENGTH_SHORT).show();
-                kdeToDelam.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(kdeToDelam,message,Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    output.write(message);
+                    output.flush();
+                    //Toast.makeText(kdeToDelam,message,Toast.LENGTH_SHORT).show();
+                    kdeToDelam.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(kdeToDelam,message,Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
             }
         }
     }

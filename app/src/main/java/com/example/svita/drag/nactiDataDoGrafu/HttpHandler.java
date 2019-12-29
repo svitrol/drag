@@ -42,9 +42,6 @@ import java.util.HashMap;
 import java.util.Locale;
 
 
-/**
- * Created by prabeesh on 7/14/2015.
- */
 public class HttpHandler extends AsyncTask<String,Void,String> {
     AlertDialog alertDialog;
     Context ctx;
