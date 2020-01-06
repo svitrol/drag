@@ -164,15 +164,29 @@ public class HttpHandler extends AsyncTask<String,Void,String> {
         }
     }
     class MyValueFormatter extends ValueFormatter {
-        boolean Teplotu=true;
+        String hodnoty;
         public MyValueFormatter(String hodnoty){
-            Teplotu=hodnoty.equals("teplota");
+            this.hodnoty=hodnoty;
         }
 
         @Override
         public String getAxisLabel(float value, AxisBase axis) {
-            if(Teplotu)return String.format("%1.2f°C",value);
-            return String.format("%1.0f%c",value,'%');
+            switch (hodnoty){
+                case "teplota":{
+                    return String.format("%1.2f°C",value);
+                }
+                case "vlhkost":{
+                    return String.format("%1.0f%c",value,'%');
+                }
+                case "svetlo":{
+                    return String.format("%1.0flux",value);
+                }
+                case "pohyb":{
+                    return String.format("%s",value==1?"pohyb":"žádný pohyb");
+                }
+            }
+            return "nic";
+
         }
     }
 

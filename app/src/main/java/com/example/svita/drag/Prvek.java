@@ -85,7 +85,7 @@ public class Prvek{
 
     public void setJmeno(String jmeno) {
         this.jmeno = jmeno;
-        tv.setText(jmeno);
+        //tv.setText(jmeno);
     }
 
 
@@ -118,14 +118,14 @@ public class Prvek{
         }
     }
     protected   void obsluha(){
-        MainActivity.aktivni=this;
         Intent funkcni=new Intent(nejakyContext,FunkcePrvku.class);
+        funkcni.putExtra("Obsluha",getProsteVsecko());
         nejakyContext.startActivity(funkcni);
     }
     protected  void vlastnosti(){
-        MainActivity.nastavuju=this;
-        Intent vlastonstaci=new Intent(nejakyContext,vlastnosti.class);
-        nejakyContext.startActivity(vlastonstaci);
+        Intent funkcni=new Intent(nejakyContext,vlastnosti.class);
+        funkcni.putExtra("Vlastnosti",getProsteVsecko());
+        nejakyContext.startActivity(funkcni);
     }
     public void nastavSiVlastnosti(Activity KdeToDelam){
         Ejmeno=KdeToDelam.findViewById(R.id.jmeno);
@@ -143,6 +143,37 @@ public class Prvek{
     public Prvek(int ikona, String jmeno) {
         this.ikona = ikona;
         this.jmeno = jmeno;
+    }
+    static public Prvek zalozSpravnyPrvek(UlozCoPujde neco){
+        Prvek novy=null;
+        switch (neco.getTypPrvku()){
+            case "Teplomer":{
+                novy=new Teplomer();
+                novy.setProsteVsecko(neco);
+                break;
+            }
+            case "Zarovka":{
+                novy=new Zarovka();
+                novy.setProsteVsecko(neco);
+                break;
+            }
+            case "Kamera":{
+                novy=new Kamera();
+                novy.setProsteVsecko(neco);
+                break;
+            }
+            case "Zasuvka":{
+                novy=new Zasuvka();
+                novy.setProsteVsecko(neco);
+                break;
+            }
+            case "SensorPS":{
+                novy=new SensorPS();
+                novy.setProsteVsecko(neco);
+                break;
+            }
+        }
+        return novy;
     }
 
     public void setIkona(int ikona) {
@@ -282,7 +313,7 @@ public class Prvek{
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Toast.makeText(nejakyContext, "Updated", Toast.LENGTH_LONG).show();
+                //Toast.makeText(nejakyContext, "Updated", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -354,6 +385,7 @@ public class Prvek{
 
     }
     protected void fachej(Activity kdeToDelam){    }
+    protected void uzNeFachej(Activity kdeToDelam){};
 
 
 

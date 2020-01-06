@@ -45,11 +45,20 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
     List<View> listakPodminkos=new ArrayList<>();
     List<View> listakofPinosKladnos=new ArrayList<>();
     List<View> listakoPinosZaporos=new ArrayList<>();
+    Prvek aktivni=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tvorba_podminky);
+
+        Intent jeTamNejaky=this.getIntent();
+        UlozCoPujde nejaka=(UlozCoPujde) jeTamNejaky.getSerializableExtra("Obsluha");
+        if(nejaka==null){
+            Intent kolobezka=new Intent(this,MainActivity.class);
+            startActivity(kolobezka);
+        }
+        aktivni=Prvek.zalozSpravnyPrvek(nejaka);
 
         zaprnavetevCoOvladnout=findViewById(R.id.zaporenavetev);
         kladnavetevCoOvladnout=findViewById(R.id.kladackavetev);
@@ -168,7 +177,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
     private List<View> NahodTamTenVyberos(LinearLayout kdeJsem,boolean viceroPinos){
         List<View> veslednyListak=new ArrayList<>();
         if(viceroPinos){
-            for (String pinos:MainActivity.aktivni.coMaPrvekPodSebou().split(":")) {
+            for (String pinos:aktivni.coMaPrvekPodSebou().split(":")) {
                 LayoutInflater inflater= (LayoutInflater)this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
                 View convertView = inflater.inflate(R.layout.nastacenivicenezjednoho_pinu, null);
                 ((TextView)convertView.findViewById(R.id.rele)).setText(pinos);
@@ -178,7 +187,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
             }
         }
         else {
-            ArrayAdapter<String> OvaldanyRele = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,MainActivity.aktivni.coMaPrvekPodSebou().split(":"));
+            ArrayAdapter<String> OvaldanyRele = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,aktivni.coMaPrvekPodSebou().split(":"));
             OvaldanyRele.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             LayoutInflater inflater= (LayoutInflater)this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
             View convertView = inflater.inflate(R.layout.nastavenipinu_zasuvky, null);
@@ -195,7 +204,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         if(Prikazos.charAt(0)=='P'){
             checkly.setChecked(true);
             int i=1;
-            for (String pinos:MainActivity.aktivni.coMaPrvekPodSebou().split(":")) {
+            for (String pinos:aktivni.coMaPrvekPodSebou().split(":")) {
                 LayoutInflater inflater= (LayoutInflater)this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
                 View convertView = inflater.inflate(R.layout.nastacenivicenezjednoho_pinu, null);
                 ((TextView)convertView.findViewById(R.id.rele)).setText(pinos);
@@ -223,7 +232,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         }
         else {
             checkly.setChecked(false);
-            ArrayAdapter<String> OvaldanyRele = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,MainActivity.aktivni.coMaPrvekPodSebou().split(":"));
+            ArrayAdapter<String> OvaldanyRele = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,aktivni.coMaPrvekPodSebou().split(":"));
             OvaldanyRele.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             LayoutInflater inflater= (LayoutInflater)this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
             View convertView = inflater.inflate(R.layout.nastavenipinu_zasuvky, null);
@@ -287,29 +296,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         napovednyAdapter = new ArrayAdapter<String>(this,R.layout.napovedna_polozka, R.id.text_view_list_item);
         //System.out.println("hovado ");
         for (UlozCoPujde jdnotka:prvky) {;
-            Prvek novy=null;
-            switch (jdnotka.getTypPrvku()){
-                case "Teplomer":{
-                    novy=new Teplomer();
-                    novy.setProsteVsecko(jdnotka);
-                    break;
-                }
-                case "Zarovka":{
-                    novy=new Zarovka();
-                    novy.setProsteVsecko(jdnotka);
-                    break;
-                }
-                case "Kamera":{
-                    novy=new Kamera();
-                    novy.setProsteVsecko(jdnotka);
-                    break;
-                }
-                case "Zasuvka":{
-                    novy=new Zasuvka();
-                    novy.setProsteVsecko(jdnotka);
-                    break;
-                }
-            }
+            Prvek novy=Prvek.zalozSpravnyPrvek(jdnotka);
             if(!novy.isPrvekRidici()){
                 String[] coMaPodPalcem=novy.coMaPrvekPodSebou().split(":");
                 for (String vec:coMaPodPalcem) {
@@ -319,7 +306,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
             }
         }
         //System.out.println("hovado konec ");
-        String[] veci=MainActivity.aktivni.coMaPrvekPodSebou().split(":");
+        String[] veci=aktivni.coMaPrvekPodSebou().split(":");
         for (String vec:veci) {
             napovednyAdapter.add("TentoPrvek:"+vec);
         }

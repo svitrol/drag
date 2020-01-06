@@ -16,14 +16,16 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class FunkcePrvku extends AppCompatActivity {
+    Prvek kteryLeti=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(MainActivity.aktivni!=null){
-            Prvek kteryLeti=MainActivity.aktivni;
+        Intent jeTamNejaky=this.getIntent();
+        UlozCoPujde nejaka=(UlozCoPujde) jeTamNejaky.getSerializableExtra("Obsluha");
+        if(nejaka!=null){
+            kteryLeti=Prvek.zalozSpravnyPrvek(nejaka);
             setContentView(kteryLeti.getFunkcniLayout());
-            kteryLeti.fachej(this);
         }
         else {
             Intent kolobezka=new Intent(this,MainActivity.class);
@@ -32,5 +34,16 @@ public class FunkcePrvku extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        kteryLeti.fachej(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        kteryLeti.uzNeFachej(this);
+    }
 }
 

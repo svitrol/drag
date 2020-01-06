@@ -217,22 +217,24 @@ public class Zasuvka extends Prvek {
         }
         return mojeOvecky;
     }
+    private funkcnost facha=null;
     @Override
     protected void fachej(Activity kdeToDelam){
-        funkcnost facha=new funkcnost(kdeToDelam);
+        facha=new funkcnost(kdeToDelam);
     }
     class funkcnost{
-        Button infosaurus;
-        Thread Thread1 = null;
-        boolean pripojen=false;
-        String SERVER_IP=getUrl().toString();
-        int SERVER_PORT=getPort();
-        Activity kdeToDelam;
-        boolean poslalJsem=false,dosloOk=false;
-        Button aktivni=null,Makra;
-        Button[]pole=new Button[8];
-        Handler handeler=new Handler();
-        RelePresDb jenKdyzToNejdePrimo;
+        private Button infosaurus;
+        private Thread Thread1 = null;
+        private boolean pripojen=false;
+        private String SERVER_IP=getUrl().toString();
+        private int SERVER_PORT=getPort();
+        private Activity kdeToDelam;
+        private boolean poslalJsem=false,dosloOk=false;
+        private Button aktivni=null,Makra;
+        private Button[]pole=new Button[8];
+        private Handler handeler=new Handler();
+        private RelePresDb jenKdyzToNejdePrimo;
+        private boolean muzejetSmycka=false;
         public  funkcnost(final Activity kdeToDelam){
             this.kdeToDelam=kdeToDelam;
             pole[0]=kdeToDelam.findViewById(R.id.Z1);
@@ -251,7 +253,7 @@ public class Zasuvka extends Prvek {
                         new Thread(new Thread3("RX:?")).start();
                     }
                     else {
-                        jenKdyzToNejdePrimo=new RelePresDb(getDb(),getDbjmeno(),getDbheslo(),pole,kolikZasuvek);
+                        jenKdyzToNejdePrimo=new RelePresDb(Zasuvka.this,pole,kolikZasuvek);
                         jenKdyzToNejdePrimo.execute("stav");
                     }
 
@@ -286,6 +288,7 @@ public class Zasuvka extends Prvek {
                     break;
                 }
             }
+            muzejetSmycka=true;
             Thread1 = new Thread(new Thread1());
             Thread1.start();
             //handeler.postDelayed(new Thread3("RX:?"), 1000);
@@ -305,14 +308,22 @@ public class Zasuvka extends Prvek {
                     zacniAktivituProNoveMakro(kdeToDelam);
                 }
             });
+            handeler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(pripojen){
+                        new Thread(new Thread3("RX:?")).start();
+                    }
+                    else {
+                        jenKdyzToNejdePrimo=new RelePresDb(Zasuvka.this,pole,kolikZasuvek);
+                        jenKdyzToNejdePrimo.execute("stav");
+                    }
+                }
+            },1000);
         }
         private void zacniAktivituProNoveMakro(final Activity kdeToDelam){
-            ArrayList<CharSequence> lisovniTajemstvi=new ArrayList<>();
-            lisovniTajemstvi.add(db);
-            lisovniTajemstvi.add(dbjmeno);
-            lisovniTajemstvi.add(dbheslo);
             Intent grafek=new Intent(kdeToDelam, makraZasuvky.class);
-            grafek.putExtra("Graf",lisovniTajemstvi);
+            grafek.putExtra("Obsluha",getProsteVsecko());
             kdeToDelam.startActivity(grafek);
         }
         private String stav(boolean stav){
@@ -337,7 +348,7 @@ public class Zasuvka extends Prvek {
                 String[] polish={"update","N","N","N","N","N","N","N","N",((Button)v).getText().toString()};
                 int i=((Button)v).getText().charAt(1)-48;
                 polish[i]=stav(stavator);
-                jenKdyzToNejdePrimo=new RelePresDb(getDb(),getDbjmeno(),getDbheslo(),pole,kolikZasuvek);
+                jenKdyzToNejdePrimo=new RelePresDb(Zasuvka.this,pole,kolikZasuvek);
                 jenKdyzToNejdePrimo.execute(polish);
 
             }
@@ -376,7 +387,7 @@ public class Zasuvka extends Prvek {
         class Thread2 implements Runnable {
             @Override
             public void run() {
-                while (true) {
+                while (muzejetSmycka) {
                     try {
                         final String message = input.readLine();
                         if (!message.isEmpty()) {
@@ -457,5 +468,12 @@ public class Zasuvka extends Prvek {
 
             }
         }
+        public void SkonciTo(){
+            muzejetSmycka=false;
+        }
+    }
+    @Override
+    protected void uzNeFachej(Activity kdeToDelam) {
+        facha.SkonciTo();
     }
 }

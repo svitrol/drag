@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.svita.drag.MainActivity;
+import com.example.svita.drag.Prvek;
+import com.example.svita.drag.Zasuvka;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,15 +28,15 @@ public class RelePresDb extends AsyncTask<String,Void,String> {
     String login_pass ;
     Button[] pole;
     int kolikZasuvek;
+    Prvek aktivni;
 
-    public RelePresDb(String login_url, String login_name, String login_pass, Button[] pole,int kolikZasuvek) {
-        this.login_url = login_url;
-        this.login_name = login_name;
-        this.login_pass = login_pass;
+    public RelePresDb(Zasuvka aktivni, Button[] pole, int kolikZasuvek) {
+        this.login_url = aktivni.getDb();
+        this.login_name = aktivni.getDbjmeno();
+        this.login_pass = aktivni.getDbheslo();
         this.pole=pole;
         this.kolikZasuvek=kolikZasuvek;
-
-
+        this.aktivni=aktivni;
     }
     @Override
     protected String doInBackground(String... strings) {
@@ -50,7 +52,7 @@ public class RelePresDb extends AsyncTask<String,Void,String> {
                 String data = URLEncoder.encode("jmeno","UTF-8")+"="+URLEncoder.encode(login_name,"UTF-8")+"&"+
                         URLEncoder.encode("heslo","UTF-8")+"="+URLEncoder.encode(login_pass,"UTF-8")+"&"+
                         URLEncoder.encode("akce","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8");
-                String[] coBudeOvladat= MainActivity.aktivni.coMaPrvekPodSebou().split(":");
+                String[] coBudeOvladat= aktivni.coMaPrvekPodSebou().split(":");
                 for(int i=0;i<coBudeOvladat.length;i++){
                     String jdenotka=coBudeOvladat[i];
                     String hodnota=strings[i+1];

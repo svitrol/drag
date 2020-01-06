@@ -36,13 +36,10 @@ public class MainActivity extends AppCompatActivity {
     ListView listak;
     Button nabidkovy;
     public static Prvek zrovnaPresouvam;
-    public static Prvek nastavuju;
-    public static Prvek aktivni;
 
-
-    String[] names = { "Teploměr", "Žárovka", "Kamera", "Zásuvka" };
+    String[] names = { "Teploměr", "Žárovka", "Kamera", "Zásuvka","Sensor Pohybu" };
     int[] images = { R.drawable.thermometer, R.drawable.bulb, R.drawable.camera,
-            R.drawable.plugwall };
+            R.drawable.plugwall,R.drawable.sensorpohybu };
     static List<Prvek> prvke=new ArrayList<>();
 
     boolean edit=false;
@@ -141,6 +138,10 @@ public class MainActivity extends AppCompatActivity {
                                 dalsi=new Zasuvka();
                                 break;
                             }
+                            case 4:{
+                                dalsi=new SensorPS();
+                                break;
+                            }
 
                         }
                         dalsi.prosteVsecko.setId(prvke.size());
@@ -149,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                         dalsi.prosteVsecko.setId(prvke.size()-1);
                         plocha.addView(prvke.get(prvke.size()-1).dejmiNovyNahled(MainActivity.this));
                         zrovnaPresouvam=prvke.get(prvke.size()-1);
-                        nastavuju=prvke.get(prvke.size()-1);
 
                         return false;
                     }
@@ -193,47 +193,14 @@ public class MainActivity extends AppCompatActivity {
     }
     public void VrazTamTenListDoLayoutu(List<UlozCoPujde> listak){
         for (UlozCoPujde neco:listak ) {
-            Prvek novy=null;
-            switch (neco.getTypPrvku()){
-                case "Teplomer":{
-                    novy=new Teplomer();
-                    novy.setProsteVsecko(neco);
-                    prvke.add(novy);
-                    //pridání polozky do layoutu
-                    plocha.addView(prvke.get(prvke.size()-1).getView(MainActivity.this));
-
-                    break;
-                }
-                case "Zarovka":{
-                    novy=new Zarovka();
-                    novy.setProsteVsecko(neco);
-                    prvke.add(novy);
-                    //pridání polozky do layoutu
-                    plocha.addView(prvke.get(prvke.size()-1).getView(MainActivity.this));
-
-                    break;
-                }
-                case "Kamera":{
-                    novy=new Kamera();
-                    novy.setProsteVsecko(neco);
-                    prvke.add(novy);
-                    //pridání polozky do layoutu
-                    plocha.addView(prvke.get(prvke.size()-1).getView(MainActivity.this));
-
-                    break;
-                }
-                case "Zasuvka":{
-                    novy=new Zasuvka();
-                    novy.setProsteVsecko(neco);
-                    prvke.add(novy);
-                    //pridání polozky do layoutu
-                    plocha.addView(prvke.get(prvke.size()-1).getView(MainActivity.this));
-
-                    break;
-                }
+            Prvek novy=Prvek.zalozSpravnyPrvek(neco);
+            if(novy!=null){
+                prvke.add(novy);
+                //pridání polozky do layoutu
+                plocha.addView(prvke.get(prvke.size()-1).getView(MainActivity.this));
+                novy.setEdit(false);
             }
-            if(novy!=null)
-            novy.setEdit(false);
+
         }
     }
 

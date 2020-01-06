@@ -46,11 +46,19 @@ public class makraZasuvky extends AppCompatActivity {
     RecyclerView recyklac;
     int kliklaPodminka;
     List<Prvek> prvkySeKterymiBychMohlPracovat;
+    Prvek aktivni=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_makra_zasuvky);
+        Intent jeTamNejaky=this.getIntent();
+        UlozCoPujde nejaka=(UlozCoPujde) jeTamNejaky.getSerializableExtra("Obsluha");
+        if(nejaka==null){
+            Intent kolobezka=new Intent(this,MainActivity.class);
+            startActivity(kolobezka);
+        }
+        aktivni=Prvek.zalozSpravnyPrvek(nejaka);
         Toolbar toolbar = findViewById(R.id.toolbar);
         recyklac=findViewById(R.id.NejhorsiAnglictinarCoJeVeTride);
         recyklac.setLayoutManager(new LinearLayoutManager(this));
@@ -59,6 +67,7 @@ public class makraZasuvky extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(makraZasuvky.this,tvorbaPodminky.class);
+                intent.putExtra("Obsluha",aktivni.getProsteVsecko());
                 startActivityForResult(intent, PODMINKOS_SPLNENOS);
             }
         });
@@ -113,29 +122,7 @@ public class makraZasuvky extends AppCompatActivity {
         prvkySeKterymiBychMohlPracovat=new ArrayList<>();
         //System.out.println("hovado ");
         for (UlozCoPujde jdnotka:prvky) {;
-            Prvek novy=null;
-            switch (jdnotka.getTypPrvku()){
-                case "Teplomer":{
-                    novy=new Teplomer();
-                    novy.setProsteVsecko(jdnotka);
-                    break;
-                }
-                case "Zarovka":{
-                    novy=new Zarovka();
-                    novy.setProsteVsecko(jdnotka);
-                    break;
-                }
-                case "Kamera":{
-                    novy=new Kamera();
-                    novy.setProsteVsecko(jdnotka);
-                    break;
-                }
-                case "Zasuvka":{
-                    novy=new Zasuvka();
-                    novy.setProsteVsecko(jdnotka);
-                    break;
-                }
-            }
+            Prvek novy=Prvek.zalozSpravnyPrvek(jdnotka);
             if(!novy.isPrvekRidici()){
                 prvkySeKterymiBychMohlPracovat.add(novy);
             }
@@ -167,7 +154,7 @@ public class makraZasuvky extends AppCompatActivity {
         if(potrebnyPrvky.size()==0)konecnaZprva+="t";
         else konecnaZprva=konecnaZprva.substring(0,konecnaZprva.length()-1);
         konecnaZprva+="{";
-        List<String> vlastniHodnoty= Arrays.asList(MainActivity.aktivni.coMaPrvekPodSebou().split(":"));
+        List<String> vlastniHodnoty= Arrays.asList(aktivni.coMaPrvekPodSebou().split(":"));
 
         for(int i=0;i<listakos.size();i++){
             Podminkos podminka=listakos.get(i);
@@ -289,6 +276,7 @@ public class makraZasuvky extends AppCompatActivity {
                         kliklaPodminka=pozice;
                         Intent intent=new Intent(makraZasuvky.this,tvorbaPodminky.class);
                         intent.putExtra("Podminkos",listakos.get(pozice));
+                        intent.putExtra("Obsluha",aktivni.getProsteVsecko());
                         startActivityForResult(intent, PODMINKOS_SPLNENOS);
                     }
                 });
@@ -312,8 +300,8 @@ public class makraZasuvky extends AppCompatActivity {
         //Thread Thread1 = null;
 
         public odesliMakro(String zprava,View view){
-            SERVER_IP=MainActivity.aktivni.getUrl().toString();
-            SERVER_PORT=MainActivity.aktivni.getPort();
+            SERVER_IP=aktivni.getUrl().toString();
+            SERVER_PORT=aktivni.getPort();
             this.view=view;
             if(zprava.length()>49){
                 RozsekanaZprava.add(zprava.substring(0,49));
@@ -388,12 +376,12 @@ public class makraZasuvky extends AppCompatActivity {
         //Thread Thread1 = null;
 
         public dostanMakroZmodulu(){
-            SERVER_IP=MainActivity.aktivni.getUrl().toString();
-            SERVER_PORT=MainActivity.aktivni.getPort();
+            SERVER_IP=aktivni.getUrl().toString();
+            SERVER_PORT=aktivni.getPort();
         }
         String dostanCitelnyTvarpromene(String Necitelny,List<Prvek> zCehoVybiram){
             String vysledkos="";
-            List<String> pinos= Arrays.asList(MainActivity.aktivni.coMaPrvekPodSebou().split(":"));
+            List<String> pinos= Arrays.asList(aktivni.coMaPrvekPodSebou().split(":"));
             if(Necitelny.charAt(0)=='v'){
                 Prvek kterySePouzil=zCehoVybiram.get(Necitelny.charAt(1)-48);
                 String coByToMhloByt=kterySePouzil.coMaPrvekPodSebou();
@@ -501,6 +489,7 @@ public class makraZasuvky extends AppCompatActivity {
                         kliklaPodminka=pozice;
                         Intent intent=new Intent(makraZasuvky.this,tvorbaPodminky.class);
                         intent.putExtra("Podminkos",listakos.get(pozice));
+                        intent.putExtra("Obsluha",aktivni.getProsteVsecko());
                         startActivityForResult(intent, PODMINKOS_SPLNENOS);
                     }
                 });
