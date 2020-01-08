@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -101,8 +102,22 @@ public class Prvek{
                     MainActivity.zrovnaPresouvam=Prvek.this;
                     ClipData data=ClipData.newPlainText("","");
 
-                    View.DragShadowBuilder shadow=new View.DragShadowBuilder(v);
-                    v.startDrag(data,shadow,null,0);
+                    View.DragShadowBuilder shadow=new View.DragShadowBuilder(v){
+                        @Override
+                        public void onProvideShadowMetrics(Point outShadowSize, Point outShadowTouchPoint) {
+                            int width, height;
+                            // Sets the width of the shadow to half the width of the original View
+                            width = getView().getWidth();
+
+                            // Sets the height of the shadow to half the height of the original View
+                            height = getView().getHeight();
+                            outShadowSize.set(width, height);
+
+                            // Sets the touch point's position to be in the middle of the drag shadow
+                            outShadowTouchPoint.set(width / 2, height / 2);
+                        }
+                    };
+                    v.startDragAndDrop(data,shadow,null,0);
                     return true;
                 }
             });

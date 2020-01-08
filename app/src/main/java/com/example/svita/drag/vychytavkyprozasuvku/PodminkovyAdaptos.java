@@ -18,8 +18,16 @@ public class PodminkovyAdaptos extends RecyclerView.Adapter<PodminkovyAdaptos.Po
     private Context mCtx;
     private List<Podminkos> PodminksListos;
     private kliklItem hracka;
+    private kliklItem DlouheKlik=null;
 
-    public PodminkovyAdaptos(Context mCtx, List<Podminkos> podminksListos,kliklItem hracka) {
+    public PodminkovyAdaptos(Context mCtx, List<Podminkos> podminksListos, kliklItem hracka, kliklItem dlouheKlik) {
+        this.mCtx = mCtx;
+        PodminksListos = podminksListos;
+        this.hracka = hracka;
+        DlouheKlik = dlouheKlik;
+    }
+
+    public PodminkovyAdaptos(Context mCtx, List<Podminkos> podminksListos, kliklItem hracka) {
         this.mCtx = mCtx;
         PodminksListos = podminksListos;
         this.hracka=hracka;
@@ -29,6 +37,7 @@ public class PodminkovyAdaptos extends RecyclerView.Adapter<PodminkovyAdaptos.Po
     @Override
     public PodminkossViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(mCtx).inflate(R.layout.karta_podminky, viewGroup, false);
+        if(DlouheKlik!=null)return new PodminkossViewHolder(view,hracka,DlouheKlik);
         return new PodminkossViewHolder(view,hracka);
     }
 
@@ -54,7 +63,7 @@ public class PodminkovyAdaptos extends RecyclerView.Adapter<PodminkovyAdaptos.Po
 
         TextView podminka,vyraz,prikaz;
         kliklItem kliklItem;
-        public PodminkossViewHolder(View itemView,kliklItem kliknuti) {
+        public PodminkossViewHolder(View itemView, kliklItem kliknuti, final kliklItem dlouheKliknuti) {
             super(itemView);
             podminka = itemView.findViewById(R.id.nazevPodminky);
             vyraz = itemView.findViewById(R.id.podminka);
@@ -62,7 +71,24 @@ public class PodminkovyAdaptos extends RecyclerView.Adapter<PodminkovyAdaptos.Po
             kliklItem=kliknuti;
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int i=getLayoutPosition();
+                    dlouheKliknuti.vowKliknuti(i,v);
+                    return true;
+                }
+            });
 
+        }
+        public PodminkossViewHolder(View itemView, kliklItem kliknuti) {
+            super(itemView);
+            podminka = itemView.findViewById(R.id.nazevPodminky);
+            vyraz = itemView.findViewById(R.id.podminka);
+            prikaz = itemView.findViewById(R.id.prikazy);
+            kliklItem=kliknuti;
+
+            itemView.setOnClickListener(this);
         }
 
 

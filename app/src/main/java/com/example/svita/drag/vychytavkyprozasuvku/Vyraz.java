@@ -2,7 +2,7 @@ package com.example.svita.drag.vychytavkyprozasuvku;
 
 import java.io.Serializable;
 
-public class Vyraz implements Serializable {
+public class Vyraz implements Serializable, Cloneable {
     private String Prvnicast,Druhacast,nerovnost,LogikaNaKonci;
 
     public Vyraz(String prvnicast, String druhacast, String nerovnost, String logikaNaKonci) {
@@ -42,5 +42,10 @@ public class Vyraz implements Serializable {
 
     public void setLogikaNaKonci(String logikaNaKonci) {
         LogikaNaKonci = logikaNaKonci;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

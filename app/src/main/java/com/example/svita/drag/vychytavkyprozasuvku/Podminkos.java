@@ -4,7 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Podminkos implements Serializable {
+public class Podminkos implements Serializable,Cloneable {
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     private String ZapornyPrikaz,KladnyPrikaz;
     private List<Vyraz> vyrazy;
 

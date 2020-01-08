@@ -12,9 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.svita.drag.DbClient;
@@ -169,7 +172,7 @@ public class makraZasuvky extends AppCompatActivity {
             konecnaZprva+=String.format("?%s-%s;",podminka.getKladnyPrikaz(),podminka.getZapornyPrikaz());
         }
         konecnaZprva=konecnaZprva.substring(0,konecnaZprva.length()-1);
-        konecnaZprva+="}";
+        if(konecnaZprva.length()>2)konecnaZprva+="}";
         return konecnaZprva;
 
     }
@@ -279,7 +282,45 @@ public class makraZasuvky extends AppCompatActivity {
                         intent.putExtra("Obsluha",aktivni.getProsteVsecko());
                         startActivityForResult(intent, PODMINKOS_SPLNENOS);
                     }
-                });
+                },
+                        new kliklItem(){
+                            @Override
+                            public void vowKliknuti(final int pozice, View view) {
+                                PopupMenu popup=new PopupMenu(view.getContext(),view);
+                                MenuInflater inflater =popup.getMenuInflater();
+                                inflater.inflate(R.menu.podminka_dlohy_klik_menu,popup.getMenu());
+                                popup.show();
+                                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem item) {
+                                        int id=item.getItemId();
+                                        switch (id){
+                                            case R.id.kopirovat:{
+                                                Podminkos nova= null;
+                                                try {
+                                                    nova = (Podminkos) listakos.get(pozice).clone();
+                                                } catch (CloneNotSupportedException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                if(nova!=null){
+                                                    listakos.add(nova);
+                                                    recyklac.getAdapter().notifyDataSetChanged();
+                                                }
+                                                break;
+
+                                            }
+                                            case R.id.odstranit:{
+                                                listakos.remove(pozice);
+                                                recyklac.getAdapter().notifyDataSetChanged();
+                                                break;
+
+                                            }
+                                        }
+                                        return true;
+                                    }
+                                });
+                            }
+                        });
                 recyklac.setAdapter(adapter);
                 recyklac.getAdapter().notifyDataSetChanged();
             }
