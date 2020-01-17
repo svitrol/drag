@@ -28,7 +28,6 @@ import java.util.concurrent.ExecutionException;
 
 
 public class Prvek{
-    PopupMenu popup;
     EditText Ejmeno,Eipadresa,Eport;
 
     public UlozCoPujde getProsteVsecko() {
@@ -91,7 +90,16 @@ public class Prvek{
 
 
 
+    private KliknutiPrvku KlikNaVytvoreniStinu=null;
+    private KliknutiPrvku VolejNastaveniPrvku=null;
 
+    public void setKlikNaVytvoreniStinu(KliknutiPrvku klikNaVytvoreniStinu) {
+        KlikNaVytvoreniStinu = klikNaVytvoreniStinu;
+    }
+
+    public void setVolejNastaveniPrvku(KliknutiPrvku volejNastaveniPrvku) {
+        VolejNastaveniPrvku = volejNastaveniPrvku;
+    }
 
     public void setEdit(boolean edit) {
         this.edit = edit;
@@ -99,25 +107,9 @@ public class Prvek{
             convertView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    MainActivity.zrovnaPresouvam=Prvek.this;
-                    ClipData data=ClipData.newPlainText("","");
-
-                    View.DragShadowBuilder shadow=new View.DragShadowBuilder(v){
-                        @Override
-                        public void onProvideShadowMetrics(Point outShadowSize, Point outShadowTouchPoint) {
-                            int width, height;
-                            // Sets the width of the shadow to half the width of the original View
-                            width = getView().getWidth();
-
-                            // Sets the height of the shadow to half the height of the original View
-                            height = getView().getHeight();
-                            outShadowSize.set(width, height);
-
-                            // Sets the touch point's position to be in the middle of the drag shadow
-                            outShadowTouchPoint.set(width / 2, height / 2);
-                        }
-                    };
-                    v.startDragAndDrop(data,shadow,null,0);
+                    if(KlikNaVytvoreniStinu!=null){
+                        KlikNaVytvoreniStinu.klikAkce(Prvek.this);
+                    }
                     return true;
                 }
             });
@@ -132,14 +124,20 @@ public class Prvek{
             });
         }
     }
+    void dlouhyKlik(View ikona){
+        ikona.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(VolejNastaveniPrvku!=null){
+                    VolejNastaveniPrvku.klikAkce(Prvek.this);
+                }
+                return true;
+            }
+        });
+    }
     protected   void obsluha(){
         Intent funkcni=new Intent(nejakyContext,FunkcePrvku.class);
         funkcni.putExtra("Obsluha",getProsteVsecko());
-        nejakyContext.startActivity(funkcni);
-    }
-    protected  void vlastnosti(){
-        Intent funkcni=new Intent(nejakyContext,vlastnosti.class);
-        funkcni.putExtra("Vlastnosti",getProsteVsecko());
         nejakyContext.startActivity(funkcni);
     }
     public void nastavSiVlastnosti(Activity KdeToDelam){
@@ -198,7 +196,6 @@ public class Prvek{
 
     public void setPopis(String popis) {
         this.popis = popis;
-        tv.setText(popis);
     }
     protected float soradniceX=0;
     protected float soradniceY=0;
@@ -255,41 +252,7 @@ public class Prvek{
         return convertView;
 
     }
-    void dlouhyKlik(View ikona){
-        ikona.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                final View neco=v;
-                popup=new PopupMenu(v.getContext(),v);
-                MenuInflater inflater =popup.getMenuInflater();
-                inflater.inflate(R.menu.munu,popup.getMenu());
-                popup.show();
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        int id=item.getItemId();
-                        switch (id){
-                            case R.id.vlastnosti:{
-                                vlastnosti();
-                                break;
 
-                            }
-                            case R.id.odstranit:{
-                                MainActivity.plocha.removeView(neco);
-                                MainActivity.prvke.remove(Prvek.this);
-                                deleteTask(prosteVsecko);
-
-                                break;
-
-                            }
-                        }
-                        return true;
-                    }
-                });
-                return true;
-            }
-        });
-    }
     protected void deleteTask(final UlozCoPujde task) {
         class DeleteTask extends AsyncTask<Void, Void, Void> {
 
@@ -386,7 +349,7 @@ public class Prvek{
     }
     public void VemSiToZpatky(){
 
-        popis=prosteVsecko.getPopis() ;
+        setPopis(prosteVsecko.getPopis()) ;
 
         setUrl(prosteVsecko.getUrl());
 

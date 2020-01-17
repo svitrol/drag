@@ -13,7 +13,7 @@ public class DbClient {
     private DbClient(Context mCtx) {
         this.mCtx = mCtx;
 
-        //vytvoření app database v Room database builder
+        //vytvoření app database v Room database builder//MojePrvky//TvojePrvky
         appDatabase = Room.databaseBuilder(mCtx, mojeDatabase.class, "MojePrvky").build();
     }
 

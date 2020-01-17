@@ -25,8 +25,10 @@ public class vlastnosti extends AppCompatActivity {
         coNastavuji.nastavSiVlastnosti(this);
     }
     public void nacpyToTam(View v){
-        coNastavuji.nejakyContext=this;
         coNastavuji.vemSiCoPotrebujes(this);
+        Intent intent=new Intent();
+        intent.putExtra("Vysledkos",coNastavuji.getProsteVsecko());
+        setResult(RESULT_OK,intent);
         finish();
     }
 }

@@ -43,14 +43,6 @@ public class Teplomer extends Prvek {
     public void setDbjmeno(String dbjmeno) {
         this.dbjmeno = dbjmeno;
     }
-
-    public int getDbport() {
-        return dbport;
-    }
-
-    public void setDbport(int dbport) {
-        this.dbport = dbport;
-    }
     public void setDbheslo(String dbheslo) {
         this.dbheslo = dbheslo;
     }
@@ -62,9 +54,8 @@ public class Teplomer extends Prvek {
     public String db="1.1.1.1";
     protected String dbheslo="";
     public String dbjmeno="";
-    public int dbport=80;
     public boolean MamDatabazi=true;
-    EditText Edb,Edbport,Edbjmeno,Edbheslo;
+    EditText Edb,Edbjmeno,Edbheslo;
     CheckBox MaDatabazi,zobrazHeslo;
     public Teplomer() {
         super(R.drawable.thermometer, "teplota");
@@ -95,18 +86,15 @@ public class Teplomer extends Prvek {
 
         super.nastavSiVlastnosti(kdeToDelam);
         Edb=kdeToDelam.findViewById(R.id.databazislav);
-        Edbport=kdeToDelam.findViewById(R.id.portakdbcka);
         Edbjmeno=kdeToDelam.findViewById(R.id.jmenodbcka);
         Edbheslo=kdeToDelam.findViewById(R.id.heslodbcka);
         MaDatabazi=kdeToDelam.findViewById(R.id.checkBox);
         zobrazHeslo=kdeToDelam.findViewById(R.id.checkBox2);
         Edb.setText(getDb());
-        Edbport.setText(""+getDbport());
         Edbjmeno.setText(getDbjmeno());
         Edbheslo.setText(getDbheslo());
         if(!MamDatabazi){
             Edb.setVisibility(View.INVISIBLE);
-            Edbport.setVisibility(View.INVISIBLE);
             Edbjmeno.setVisibility(View.INVISIBLE);
             Edbheslo.setVisibility(View.INVISIBLE);
         }
@@ -116,14 +104,12 @@ public class Teplomer extends Prvek {
                 if(((CheckBox)v).isChecked()){
                     MamDatabazi=true;
                     Edb.setVisibility(View.VISIBLE);
-                    Edbport.setVisibility(View.VISIBLE);
                     Edbjmeno.setVisibility(View.VISIBLE);
                     Edbheslo.setVisibility(View.VISIBLE);
                 }
                 else{
                     MamDatabazi=false;
                     Edb.setVisibility(View.INVISIBLE);
-                    Edbport.setVisibility(View.INVISIBLE);
                     Edbjmeno.setVisibility(View.INVISIBLE);
                     Edbheslo.setVisibility(View.INVISIBLE);
                 }
@@ -148,7 +134,6 @@ public class Teplomer extends Prvek {
         super.vemSiCoPotrebujes(kdeToDelam);
         if(MaDatabazi.isChecked()){
             setDb(Edb.getText().toString());
-            setDbport(Integer.parseInt(Edbport.getText().toString()));
             setDbjmeno(Edbjmeno.getText().toString());
             setDbheslo(Edbheslo.getText().toString());
         }
@@ -167,8 +152,6 @@ public class Teplomer extends Prvek {
 
         prosteVsecko.setDbjmeno(dbjmeno) ;
 
-        prosteVsecko.setDbport(dbport) ;
-
         prosteVsecko.setMamDatabazi(MamDatabazi) ;
     }
     @Override
@@ -179,8 +162,6 @@ public class Teplomer extends Prvek {
         dbheslo=prosteVsecko.getDbheslo() ;
 
         dbjmeno=prosteVsecko.getDbjmeno() ;
-
-        dbport=prosteVsecko.getDbport() ;
 
         MamDatabazi=prosteVsecko.isMamDatabazi() ;
 

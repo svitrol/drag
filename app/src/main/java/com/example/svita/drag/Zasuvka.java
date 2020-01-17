@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -51,13 +52,6 @@ public class Zasuvka extends Prvek {
         this.dbjmeno = dbjmeno;
     }
 
-    public int getDbport() {
-        return dbport;
-    }
-
-    public void setDbport(int dbport) {
-        this.dbport = dbport;
-    }
     public void setDbheslo(String dbheslo) {
         this.dbheslo = dbheslo;
     }
@@ -69,11 +63,10 @@ public class Zasuvka extends Prvek {
     public String db="1.1.1.1";
     protected String dbheslo="";
     public String dbjmeno="";
-    public int dbport=80;
     public boolean MamDatabazi=true;
     public int kolikZasuvek=1;
 
-    EditText Edb,Edbport,Edbjmeno,Edbheslo;
+    EditText Edb,Edbjmeno,Edbheslo;
     CheckBox MaDatabazi,zobrazHeslo;
     RadioGroup skupnika;
 
@@ -82,19 +75,32 @@ public class Zasuvka extends Prvek {
 
         super.nastavSiVlastnosti(kdeToDelam);
         Edb=kdeToDelam.findViewById(R.id.databazislav);
-        Edbport=kdeToDelam.findViewById(R.id.portakdbcka);
         Edbjmeno=kdeToDelam.findViewById(R.id.jmenodbcka);
         Edbheslo=kdeToDelam.findViewById(R.id.heslodbcka);
         MaDatabazi=kdeToDelam.findViewById(R.id.checkBox);
         zobrazHeslo=kdeToDelam.findViewById(R.id.checkBox2);
         skupnika=kdeToDelam.findViewById(R.id.skipnator9000);
-        Edb.setText(getDb().toString());
-        Edbport.setText(""+getDbport());
+        RadioButton aktivni=kdeToDelam.findViewById(R.id.Z1);
+        switch (kolikZasuvek){
+            case 2:{
+                aktivni=kdeToDelam.findViewById(R.id.Z2);
+                break;
+            }
+            case 4:{
+                aktivni=kdeToDelam.findViewById(R.id.Z4);
+                break;
+            }
+            case 8:{
+                aktivni=kdeToDelam.findViewById(R.id.Z8);
+                break;
+            }
+        }
+        aktivni.setChecked(true);
+        Edb.setText(getDb());
         Edbjmeno.setText(getDbjmeno());
         Edbheslo.setText(getDbheslo());
         if(!MamDatabazi){
             Edb.setVisibility(View.INVISIBLE);
-            Edbport.setVisibility(View.INVISIBLE);
             Edbjmeno.setVisibility(View.INVISIBLE);
             Edbheslo.setVisibility(View.INVISIBLE);
         }
@@ -104,14 +110,12 @@ public class Zasuvka extends Prvek {
                 if(((CheckBox)v).isChecked()){
                     MamDatabazi=true;
                     Edb.setVisibility(View.VISIBLE);
-                    Edbport.setVisibility(View.VISIBLE);
                     Edbjmeno.setVisibility(View.VISIBLE);
                     Edbheslo.setVisibility(View.VISIBLE);
                 }
                 else{
                     MamDatabazi=false;
                     Edb.setVisibility(View.INVISIBLE);
-                    Edbport.setVisibility(View.INVISIBLE);
                     Edbjmeno.setVisibility(View.INVISIBLE);
                     Edbheslo.setVisibility(View.INVISIBLE);
                 }
@@ -135,7 +139,6 @@ public class Zasuvka extends Prvek {
         super.vemSiCoPotrebujes(kdeToDelam);
         if(MaDatabazi.isChecked()){
             setDb(Edb.getText().toString());
-            setDbport(Integer.parseInt(Edbport.getText().toString()));
             setDbjmeno(Edbjmeno.getText().toString());
             setDbheslo(Edbheslo.getText().toString());
         }
@@ -166,17 +169,15 @@ public class Zasuvka extends Prvek {
 
         super.NaplnProsteVsecko();
 
-        prosteVsecko.setDb(db.toString()) ;
+        prosteVsecko.setDb(db) ;
 
         prosteVsecko.setDbheslo(dbheslo) ;
 
         prosteVsecko.setDbjmeno(dbjmeno) ;
 
-        prosteVsecko.setDbport(dbport) ;
-
         prosteVsecko.setMamDatabazi(MamDatabazi) ;
 
-        prosteVsecko.setKolikzasuvek(kolikZasuvek);
+        prosteVsecko.setPopis("pocetZasuvek="+kolikZasuvek);
     }
     @Override
     public void VemSiToZpatky(){
@@ -187,11 +188,8 @@ public class Zasuvka extends Prvek {
 
         dbjmeno=prosteVsecko.getDbjmeno() ;
 
-        dbport=prosteVsecko.getDbport() ;
-
         MamDatabazi=prosteVsecko.isMamDatabazi() ;
-
-        kolikZasuvek=prosteVsecko.getKolikzasuvek();
+        kolikZasuvek=Integer.parseInt(prosteVsecko.getPopis().split("=")[1]);
 
     }
     @Override

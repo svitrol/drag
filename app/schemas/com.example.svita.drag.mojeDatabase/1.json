@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1c2a7ae90eaa49ef1b944173a5584d20",
+    "identityHash": "bdb9721e4563ee969fa010c1a01b6805",
     "entities": [
       {
         "tableName": "UlozCoPujde",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `popis` TEXT, `typPrvku` TEXT, `url` TEXT, `jmeno` TEXT, `portak` INTEGER NOT NULL, `souradniceX` REAL NOT NULL, `souradniceY` REAL NOT NULL, `uriDatabaze` TEXT, `dbHeslo` TEXT, `dbJmeno` TEXT, `dbPort` INTEGER NOT NULL, `mamDb` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `popis` TEXT, `typPrvku` TEXT, `url` TEXT, `jmeno` TEXT, `portak` INTEGER NOT NULL, `souradniceX` REAL NOT NULL, `souradniceY` REAL NOT NULL, `urlDatabaze` TEXT, `dbHeslo` TEXT, `dbJmeno` TEXT, `mamDb` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -58,7 +58,7 @@
           },
           {
             "fieldPath": "db",
-            "columnName": "uriDatabaze",
+            "columnName": "urlDatabaze",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -73,12 +73,6 @@
             "columnName": "dbJmeno",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "dbport",
-            "columnName": "dbPort",
-            "affinity": "INTEGER",
-            "notNull": true
           },
           {
             "fieldPath": "MamDatabazi",
@@ -99,7 +93,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1c2a7ae90eaa49ef1b944173a5584d20\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bdb9721e4563ee969fa010c1a01b6805\")"
     ]
   }
 }

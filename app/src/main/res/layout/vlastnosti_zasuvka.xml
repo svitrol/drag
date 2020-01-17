@@ -10,28 +10,11 @@ android:layout_height="match_parent">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:text="Dbjmeno"
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/jmenodbcka"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:text="port Db"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/portakdbcka"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -49,22 +32,18 @@ android:layout_height="match_parent">
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />
 
-<Button
-    android:id="@+id/button2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="244dp"
-    android:layout_marginLeft="244dp"
-    android:layout_marginTop="213dp"
-    android:layout_marginEnd="79dp"
-    android:layout_marginRight="79dp"
-    android:layout_marginBottom="82dp"
-    android:onClick="nacpyToTam"
-    android:text="Ulož"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/portakdbcka" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="244dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginBottom="82dp"
+        android:onClick="nacpyToTam"
+        android:text="Ulož"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 <TextView
     android:id="@+id/textView2"
@@ -159,40 +138,24 @@ android:layout_height="match_parent">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
-        android:layout_marginLeft="13dp"
         android:layout_marginTop="33dp"
-        android:layout_marginBottom="5dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/portakdbcka"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/portak" />
-
-    <EditText
-        android:id="@+id/portakdbcka"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/databazislav" />
 
     <EditText
         android:id="@+id/jmenodbcka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="5dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/heslodbcka"
         app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/portakdbcka" />
+        app:layout_constraintTop_toBottomOf="@+id/databazislav" />
 
     <EditText
         android:id="@+id/heslodbcka"
@@ -218,16 +181,17 @@ android:layout_height="match_parent">
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/ipina" />
 
-<CheckBox
-    android:id="@+id/checkBox"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="1dp"
-    android:checked="true"
-    android:text="Má databázi"
-    app:layout_constraintBottom_toTopOf="@+id/databazislav"
-    app:layout_constraintTop_toBottomOf="@+id/portak"
-    tools:layout_editor_absoluteX="184dp" />
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="112dp"
+        android:layout_marginBottom="1dp"
+        android:checked="true"
+        android:text="Má databázi"
+        app:layout_constraintBottom_toTopOf="@+id/databazislav"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/portak" />
 
     <CheckBox
         android:id="@+id/checkBox2"

@@ -3,13 +3,16 @@ package com.example.svita.drag;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +23,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.svita.drag.Prvek;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
+import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,15 +40,15 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    public static RelativeLayout plocha;
+    public RelativeLayout plocha;
     ListView listak;
     Button nabidkovy;
-    public static Prvek zrovnaPresouvam;
+    private  Prvek zrovnaPresouvam;
 
     String[] names = { "Teploměr", "Žárovka", "Kamera", "Zásuvka","Sensor Pohybu" };
     int[] images = { R.drawable.thermometer, R.drawable.bulb, R.drawable.camera,
             R.drawable.plugwall,R.drawable.sensorpohybu };
-    static List<Prvek> prvke=new ArrayList<>();
+    List<Prvek> prvke=new ArrayList<>();
 
     boolean edit=false;
 
@@ -117,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         ClipData data=ClipData.newPlainText("","");
                         View.DragShadowBuilder shadow=new View.DragShadowBuilder(view);
-                        view.startDrag(data,shadow,null,0);
+                        view.startDragAndDrop(data,shadow,null,0);
                         listak.setVisibility(View.INVISIBLE);
                         jdeVidetListak=false;
                         Prvek dalsi=null;
@@ -147,9 +155,9 @@ public class MainActivity extends AppCompatActivity {
                         dalsi.prosteVsecko.setId(prvke.size());
                         prvke.add(dalsi);
                         //pridání polozky do layoutu
-                        dalsi.prosteVsecko.setId(prvke.size()-1);
-                        plocha.addView(prvke.get(prvke.size()-1).dejmiNovyNahled(MainActivity.this));
+                        plocha.addView(dalsi.dejmiNovyNahled(MainActivity.this));
                         zrovnaPresouvam=prvke.get(prvke.size()-1);
+                        nahodtamAkce(dalsi);
 
                         return false;
                     }
@@ -199,9 +207,86 @@ public class MainActivity extends AppCompatActivity {
                 //pridání polozky do layoutu
                 plocha.addView(prvke.get(prvke.size()-1).getView(MainActivity.this));
                 novy.setEdit(false);
+                nahodtamAkce(novy);
             }
 
         }
+    }
+    private static final int NASTAVENI_DOPLNENOS = 1001;
+    private void nahodtamAkce(Prvek neco){
+        neco.setKlikNaVytvoreniStinu(new KliknutiPrvku() {
+            @Override
+            public void klikAkce(Prvek coKlik) {
+                zrovnaPresouvam=coKlik;
+                ClipData data=ClipData.newPlainText("","");
+
+                View.DragShadowBuilder shadow=new View.DragShadowBuilder(coKlik.convertView){
+                    @Override
+                    public void onProvideShadowMetrics(Point outShadowSize, Point outShadowTouchPoint) {
+                        int width, height;
+                        width = getView().getWidth();
+                        height = getView().getHeight();
+                        outShadowSize.set(width, height);
+
+                        // Sets the touch point's position to be in the middle of the drag shadow
+                        outShadowTouchPoint.set(width / 2, height / 2);
+                    }
+                };
+                coKlik.convertView.startDragAndDrop(data,shadow,null,0);
+            }
+        });
+        neco.setVolejNastaveniPrvku(new KliknutiPrvku() {
+            @Override
+            public void klikAkce(final Prvek coKlik) {
+                final View v=coKlik.convertView;
+                PopupMenu popup=new PopupMenu(v.getContext(),v);
+                MenuInflater inflater =popup.getMenuInflater();
+                inflater.inflate(R.menu.munu,popup.getMenu());
+                popup.show();
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id=item.getItemId();
+                        switch (id){
+                            case R.id.vlastnosti:{
+                                Intent funkcni=new Intent(MainActivity.this,vlastnosti.class);
+                                funkcni.putExtra("Vlastnosti",coKlik.getProsteVsecko());
+                                MainActivity.this.startActivityForResult(funkcni,NASTAVENI_DOPLNENOS);
+                                break;
+
+                            }
+                            case R.id.odstranit:{
+                                plocha.removeView(v);
+                                prvke.remove(coKlik);
+                                coKlik.deleteTask(coKlik.getProsteVsecko());
+
+                                break;
+
+                            }
+                        }
+                        return true;
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode==NASTAVENI_DOPLNENOS&&resultCode==RESULT_OK)
+        {
+            final UlozCoPujde vysledkos=(UlozCoPujde) data.getSerializableExtra("Vysledkos");
+            int index=Iterables.indexOf(prvke, new Predicate<Prvek>() {
+                @Override
+                public boolean apply(@NullableDecl Prvek input) {
+                    return input.getProsteVsecko().getId()==vysledkos.getId();
+
+                }
+            });
+            prvke.get(index).setProsteVsecko(vysledkos);
+            prvke.get(index).updatePrvek();
+        }
+
     }
 
     class CustomAdapter extends BaseAdapter{

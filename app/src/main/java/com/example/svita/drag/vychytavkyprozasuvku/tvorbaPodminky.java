@@ -77,7 +77,6 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         Intent jeTamNejaky=this.getIntent();
         Podminkos nejaka=(Podminkos) jeTamNejaky.getSerializableExtra("Podminkos");
         if(nejaka!=null){
-
             PridejRadek nadelMi=new PridejRadek(this);
             List<String> znaminkos= Arrays.asList(">", "<", "=", "!=", ">=", "<=");
             List<String> operatoros=Arrays.asList("X","&","|");
@@ -94,7 +93,8 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
             listakoPinosZaporos=NahodTamTenVyberos(zaprnavetevCoOvladnout,nejaka.getZapornyPrikaz(),zapornycas,zapornaVetevVicerosPinos);
         }
         else {
-            new PridejRadek(this).novyRadek();
+            PridejRadek nadelMi= new PridejRadek(this);
+            nadelMi.novyRadek();
             listakoPinosZaporos=NahodTamTenVyberos(zaprnavetevCoOvladnout,false);
             listakofPinosKladnos=NahodTamTenVyberos(kladnavetevCoOvladnout,false);
         }
@@ -266,6 +266,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
             @Override
             protected void onPostExecute(List<UlozCoPujde> tasks) {
                 super.onPostExecute(tasks);
+                //Toast.makeText(tvorbaPodminky.this,"Došele jsem sem",Toast.LENGTH_LONG).show();
                 //vraž tam ten list do layoutu
                 VrazTamTenListNapoved(tasks);
                 uvodniNastaveni();
@@ -289,13 +290,14 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
 
         dostanPrvky gt = new dostanPrvky();
         gt.execute();
+        //Toast.makeText(tvorbaPodminky.this,"Došele jsem sem",Toast.LENGTH_LONG).show();
     }
     private void VrazTamTenListNapoved(final List<UlozCoPujde> prvky){
         //String[] countries =
 
         napovednyAdapter = new ArrayAdapter<String>(this,R.layout.napovedna_polozka, R.id.text_view_list_item);
         //System.out.println("hovado ");
-        for (UlozCoPujde jdnotka:prvky) {;
+        for (UlozCoPujde jdnotka:prvky) {
             Prvek novy=Prvek.zalozSpravnyPrvek(jdnotka);
             if(!novy.isPrvekRidici()){
                 String[] coMaPodPalcem=novy.coMaPrvekPodSebou().split(":");

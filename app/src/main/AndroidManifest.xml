@@ -24,13 +24,6 @@
                 android:value="com.example.svita.drag.FunkcePrvku" />
         </activity>
         <activity android:name=".nactiDataDoGrafu.vykresliGraf" />
-        <activity android:name=".Prihlaseni">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name=".FunkcePrvku">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
