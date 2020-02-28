@@ -1,12 +1,12 @@
 package com.example.svita.drag;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
-import android.widget.EditText;
+
+import com.example.svita.drag.prvkose.Prvek;
+import com.example.svita.drag.prvkose.UlozCoPujde;
 
 public class vlastnosti extends AppCompatActivity {
 

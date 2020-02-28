@@ -1,6 +1,5 @@
-package com.example.svita.drag.vychytavkyprozasuvku;
+package com.example.svita.drag.prvkose.vychytavkyprozasuvku;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -18,21 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.svita.drag.DbClient;
-import com.example.svita.drag.Kamera;
 import com.example.svita.drag.MainActivity;
-import com.example.svita.drag.Prvek;
+import com.example.svita.drag.prvkose.Prvek;
 import com.example.svita.drag.R;
-import com.example.svita.drag.Teplomer;
-import com.example.svita.drag.UlozCoPujde;
-import com.example.svita.drag.Zarovka;
-import com.example.svita.drag.Zasuvka;
+import com.example.svita.drag.prvkose.UlozCoPujde;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +59,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         zapornaVetevVicerosPinos=findViewById(R.id.zapornycheckBox);
 
         rozhodovaciCast=findViewById(R.id.castRozhodovaci);
+        //Toast.makeText(tvorbaPodminky.this,"jdu dostat prvky",Toast.LENGTH_LONG).show();
 
         dostanPrvky();
 
@@ -77,22 +70,34 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
         Intent jeTamNejaky=this.getIntent();
         Podminkos nejaka=(Podminkos) jeTamNejaky.getSerializableExtra("Podminkos");
         if(nejaka!=null){
-            PridejRadek nadelMi=new PridejRadek(this);
-            List<String> znaminkos= Arrays.asList(">", "<", "=", "!=", ">=", "<=");
-            List<String> operatoros=Arrays.asList("X","&","|");
-            for(Vyraz radka:nejaka.getVyrazy()){
-                nadelMi.novyRadek();
-                nadelMi.hodnota1.setText(radka.getPrvnicast());
-                nadelMi.hodnota2.setText(radka.getDruhacast());
-                nadelMi.nerovnoxti.setSelection(znaminkos.indexOf(radka.getNerovnost()));
-                nadelMi.logika.setSelection(operatoros.indexOf(radka.getLogikaNaKonci()));
+            if(!nejaka.getKladnyPrikaz().equals("")||!nejaka.getZapornyPrikaz().equals("")||nejaka.getVyrazy()!=null) {
+                //Toast.makeText(tvorbaPodminky.this,"jsem ve tvorbe ze stare podminky",Toast.LENGTH_LONG).show();
+                PridejRadek nadelMi=new PridejRadek(this);
+                List<String> znaminkos= Arrays.asList(">", "<", "=", "!=", ">=", "<=");
+                List<String> operatoros=Arrays.asList("X","&","|");
+                for(Vyraz radka:nejaka.getVyrazy()){
+                    nadelMi.novyRadek();
+                    nadelMi.hodnota1.setText(radka.getPrvnicast());
+                    nadelMi.hodnota2.setText(radka.getDruhacast());
+                    nadelMi.nerovnoxti.setSelection(znaminkos.indexOf(radka.getNerovnost()));
+                    nadelMi.logika.setSelection(operatoros.indexOf(radka.getLogikaNaKonci()));
+                }
+                EditText kladnycas=findViewById(R.id.kladnyeditText);
+                EditText zapornycas=findViewById(R.id.zapornyeditText);
+                listakofPinosKladnos=NahodTamTenVyberos(kladnavetevCoOvladnout,nejaka.getKladnyPrikaz(),kladnycas,kladnaVtevevicerosPinos);
+                listakoPinosZaporos=NahodTamTenVyberos(zaprnavetevCoOvladnout,nejaka.getZapornyPrikaz(),zapornycas,zapornaVetevVicerosPinos);
             }
-            EditText kladnycas=findViewById(R.id.kladnyeditText);
-            EditText zapornycas=findViewById(R.id.zapornyeditText);
-            listakofPinosKladnos=NahodTamTenVyberos(kladnavetevCoOvladnout,nejaka.getKladnyPrikaz(),kladnycas,kladnaVtevevicerosPinos);
-            listakoPinosZaporos=NahodTamTenVyberos(zaprnavetevCoOvladnout,nejaka.getZapornyPrikaz(),zapornycas,zapornaVetevVicerosPinos);
+            else {
+                //Toast.makeText(tvorbaPodminky.this,"jsem ve tvorbe ze stare podminky ale nic ve me neni",Toast.LENGTH_LONG).show();
+                PridejRadek nadelMi= new PridejRadek(this);
+                nadelMi.novyRadek();
+                listakoPinosZaporos=NahodTamTenVyberos(zaprnavetevCoOvladnout,false);
+                listakofPinosKladnos=NahodTamTenVyberos(kladnavetevCoOvladnout,false);
+            }
+
         }
         else {
+            //Toast.makeText(tvorbaPodminky.this,"jsem ve tvorbe nove podminky",Toast.LENGTH_LONG).show();
             PridejRadek nadelMi= new PridejRadek(this);
             nadelMi.novyRadek();
             listakoPinosZaporos=NahodTamTenVyberos(zaprnavetevCoOvladnout,false);
@@ -256,7 +261,7 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
             @Override
             protected List<UlozCoPujde> doInBackground(Void... voids) {
                 List<UlozCoPujde> komponenty = DbClient
-                        .getInstance(getApplicationContext())
+                        .getInstance(tvorbaPodminky.this)
                         .getAppDatabase()
                         .taskDao()
                         .getAll();
@@ -268,8 +273,11 @@ public class tvorbaPodminky extends AppCompatActivity implements AdapterView.OnI
                 super.onPostExecute(tasks);
                 //Toast.makeText(tvorbaPodminky.this,"Došele jsem sem",Toast.LENGTH_LONG).show();
                 //vraž tam ten list do layoutu
+                //Toast.makeText(tvorbaPodminky.this,"jvrazim tam ten listy",Toast.LENGTH_LONG).show();
                 VrazTamTenListNapoved(tasks);
+                //Toast.makeText(tvorbaPodminky.this,"listak vrazen",Toast.LENGTH_LONG).show();
                 uvodniNastaveni();
+                //Toast.makeText(tvorbaPodminky.this,"uvodko",Toast.LENGTH_LONG).show();
                 kladnaVtevevicerosPinos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

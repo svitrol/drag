@@ -1,10 +1,8 @@
-package com.example.svita.drag.vychytavkyprozasuvku;
+package com.example.svita.drag.prvkose.vychytavkyprozasuvku;
 
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,20 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.svita.drag.DbClient;
-import com.example.svita.drag.Kamera;
 import com.example.svita.drag.MainActivity;
-import com.example.svita.drag.Prvek;
+import com.example.svita.drag.prvkose.Prvek;
 import com.example.svita.drag.R;
-import com.example.svita.drag.Teplomer;
-import com.example.svita.drag.UlozCoPujde;
-import com.example.svita.drag.Zarovka;
-import com.example.svita.drag.Zasuvka;
+import com.example.svita.drag.prvkose.UlozCoPujde;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
@@ -93,7 +85,7 @@ public class makraZasuvky extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         kliklaPodminka=-1;
         dostanPrvky();
-        new dostanMakroZmodulu().execute();
+
     }
     private void dostanPrvky( ){
         class dostanPrvky extends AsyncTask<Void, Void, List<UlozCoPujde>> {
@@ -101,7 +93,7 @@ public class makraZasuvky extends AppCompatActivity {
             @Override
             protected List<UlozCoPujde> doInBackground(Void... voids) {
                 List<UlozCoPujde> komponenty = DbClient
-                        .getInstance(getApplicationContext())
+                        .getInstance(makraZasuvky.this)
                         .getAppDatabase()
                         .taskDao()
                         .getAll();
@@ -113,6 +105,8 @@ public class makraZasuvky extends AppCompatActivity {
                 super.onPostExecute(tasks);
                 //vraž tam ten list do layoutu
                 VrazTamTenListPrvku(tasks);
+                //Toast.makeText(makraZasuvky.this,"dostal jsemPrvyk vrazil je tam",Toast.LENGTH_LONG).show();
+                new dostanMakroZmodulu().execute();
             }
         }
 
@@ -124,7 +118,7 @@ public class makraZasuvky extends AppCompatActivity {
 
         prvkySeKterymiBychMohlPracovat=new ArrayList<>();
         //System.out.println("hovado ");
-        for (UlozCoPujde jdnotka:prvky) {;
+        for (UlozCoPujde jdnotka:prvky) {
             Prvek novy=Prvek.zalozSpravnyPrvek(jdnotka);
             if(!novy.isPrvekRidici()){
                 prvkySeKterymiBychMohlPracovat.add(novy);
@@ -344,6 +338,7 @@ public class makraZasuvky extends AppCompatActivity {
             SERVER_IP=aktivni.getUrl().toString();
             SERVER_PORT=aktivni.getPort();
             this.view=view;
+
             if(zprava.length()>49){
                 RozsekanaZprava.add(zprava.substring(0,49));
                 int i=49;
@@ -353,6 +348,7 @@ public class makraZasuvky extends AppCompatActivity {
                 }
             }
             else {
+                if(zprava.equals("St"))zprava="SR";
                 RozsekanaZprava.add(zprava);
             }
             String coVlastneOdesilam="";
@@ -436,6 +432,7 @@ public class makraZasuvky extends AppCompatActivity {
             }
             return vysledkos;
         }
+        //boolean jed=true;
 
         @Override
         protected String doInBackground(Void... voids) {
@@ -450,7 +447,15 @@ public class makraZasuvky extends AppCompatActivity {
             }
             output.write("S?");
             output.flush();
-            String zprava;
+            String zprava="";
+
+           /* Handler handeler=new Handler();
+            handeler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    jed=false;
+                }
+            },2000);*/
             while (true) {
                 try {
                     final String message = input.readLine();
@@ -471,8 +476,9 @@ public class makraZasuvky extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String zpravicka) {
+            //Toast.makeText(makraZasuvky.this,"dostl jsem zpravo",Toast.LENGTH_LONG).show();
             Toast.makeText(makraZasuvky.this,zpravicka,Toast.LENGTH_LONG).show();
-            if(!zpravicka.isEmpty()){
+            if(!zpravicka.isEmpty()&&!zpravicka.equals("nic")){
                 String[] hlavniCasti=zpravicka.split("\\{");
                 hlavniCasti[1]=hlavniCasti[1].substring(0,hlavniCasti[1].length()-1);
                 String[] Senzory=hlavniCasti[0].split(";");

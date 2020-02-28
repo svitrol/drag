@@ -1,4 +1,6 @@
-package com.example.svita.drag;
+package com.example.svita.drag.prvkose;
+
+import com.example.svita.drag.R;
 
 public class Zarovka extends Prvek {
     public Zarovka() {

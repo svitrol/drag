@@ -1,30 +1,21 @@
-package com.example.svita.drag;
+package com.example.svita.drag.prvkose;
 
 import android.app.Activity;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.system.ErrnoException;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.svita.drag.DbClient;
+import com.example.svita.drag.FunkcePrvku;
 import com.example.svita.drag.R;
-
-import java.io.Serializable;
-import java.util.concurrent.ExecutionException;
 
 
 public class Prvek{
@@ -136,7 +127,7 @@ public class Prvek{
         });
     }
     protected   void obsluha(){
-        Intent funkcni=new Intent(nejakyContext,FunkcePrvku.class);
+        Intent funkcni=new Intent(nejakyContext, FunkcePrvku.class);
         funkcni.putExtra("Obsluha",getProsteVsecko());
         nejakyContext.startActivity(funkcni);
     }
@@ -199,7 +190,7 @@ public class Prvek{
     }
     protected float soradniceX=0;
     protected float soradniceY=0;
-    void nastavPozici(float x,float y){
+    public void nastavPozici(float x,float y){
         convertView.setX(x);
         convertView.setY(y);
         soradniceX=x;
@@ -221,7 +212,7 @@ public class Prvek{
     Context nejakyContext;
     public View dejmiNovyNahled(Context context ) {
         nejakyContext=context;
-        //NaplnProsteVsecko();
+        NaplnProsteVsecko();
         saveTask();
 
         LayoutInflater inflater= (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
@@ -253,7 +244,7 @@ public class Prvek{
 
     }
 
-    protected void deleteTask(final UlozCoPujde task) {
+    public void deleteTask(final UlozCoPujde task) {
         class DeleteTask extends AsyncTask<Void, Void, Void> {
 
             @Override
@@ -362,8 +353,8 @@ public class Prvek{
         soradniceY=prosteVsecko.getSoradniceY() ;
 
     }
-    protected void fachej(Activity kdeToDelam){    }
-    protected void uzNeFachej(Activity kdeToDelam){};
+    public void fachej(Activity kdeToDelam){    }
+    public void uzNeFachej(Activity kdeToDelam){};
 
 
 

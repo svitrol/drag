@@ -1,14 +1,11 @@
-package com.example.svita.drag.vychytavkyprozasuvku;
+package com.example.svita.drag.prvkose.vychytavkyprozasuvku;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Looper;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.svita.drag.MainActivity;
-import com.example.svita.drag.Prvek;
-import com.example.svita.drag.Zasuvka;
+import com.example.svita.drag.prvkose.Prvek;
+import com.example.svita.drag.prvkose.Zasuvka;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -1,9 +1,8 @@
-package com.example.svita.drag.nactiDataDoGrafu;
+package com.example.svita.drag.prvkose.nactiDataDoGrafu;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 
 import com.example.svita.drag.R;
 import com.github.mikephil.charting.charts.LineChart;

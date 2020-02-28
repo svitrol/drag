@@ -1,13 +1,11 @@
-package com.example.svita.drag;
+package com.example.svita.drag.prvkose;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.text.method.PasswordTransformationMethod;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.CheckBox;
+
+import com.example.svita.drag.R;
 
 public class Kamera extends Prvek {
     public Kamera() {
@@ -35,7 +33,7 @@ public class Kamera extends Prvek {
         super.VemSiToZpatky();
     }
     @Override
-    protected void fachej(Activity kdeToDelam){
+    public void fachej(Activity kdeToDelam){
 
         WebView prohlizec=kdeToDelam.findViewById(R.id.prohlizec);
         prohlizec.setWebViewClient(new WebViewClient());

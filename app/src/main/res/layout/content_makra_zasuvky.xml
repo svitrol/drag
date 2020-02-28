@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".vychytavkyprozasuvku.makraZasuvky"
+    tools:context=".prvkose.vychytavkyprozasuvku.makraZasuvky"
     tools:showIn="@layout/activity_makra_zasuvky">
 
 

@@ -1,9 +1,10 @@
-package com.example.svita.drag;
+package com.example.svita.drag.prvkose;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.text.format.DateFormat;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -16,7 +17,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import com.example.svita.drag.nactiDataDoGrafu.vykresliGraf;
+
+import com.example.svita.drag.R;
+import com.example.svita.drag.prvkose.nactiDataDoGrafu.vykresliGraf;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,10 +28,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Calendar;
-import android.os.Handler;
 
-public class Teplomer extends Prvek {
-
+public class SensorPS extends Prvek {
     public String getDb() {
         return db;
     }
@@ -43,6 +45,14 @@ public class Teplomer extends Prvek {
     public void setDbjmeno(String dbjmeno) {
         this.dbjmeno = dbjmeno;
     }
+
+    public int getDbport() {
+        return dbport;
+    }
+
+    public void setDbport(int dbport) {
+        this.dbport = dbport;
+    }
     public void setDbheslo(String dbheslo) {
         this.dbheslo = dbheslo;
     }
@@ -54,14 +64,15 @@ public class Teplomer extends Prvek {
     public String db="1.1.1.1";
     protected String dbheslo="";
     public String dbjmeno="";
+    public int dbport=80;
     public boolean MamDatabazi=true;
     EditText Edb,Edbjmeno,Edbheslo;
     CheckBox MaDatabazi,zobrazHeslo;
-    public Teplomer() {
-        super(R.drawable.thermometer, "teplota");
-        prosteVsecko=new UlozCoPujde("Teplomer","teplota");
+    public SensorPS() {
+        super(R.drawable.sensorpohybu, "sensor pohybu");
+        prosteVsecko=new UlozCoPujde("SensorPS","sensor pohybu");
         vlastnostiLayout=R.layout.activity_vlastnosti;
-        funkcniLayout=R.layout.activity_funkce_prvku;
+        funkcniLayout=R.layout.funkce_ps;
     }
     @Override
     public boolean isPrvekRidici(){
@@ -69,14 +80,14 @@ public class Teplomer extends Prvek {
     }
     @Override
     public String coMaPrvekPodSebou(){
-        return "teplota:vlhkost";
+        return "pohyb:svetlo";
     }
     @Override
     public String dejMiPrikazivo(String coTimChcesDokazat){
         String prikazNaMiru="";
-        if(coTimChcesDokazat.equals("teplota:vlhkost"))prikazNaMiru="t:v";
-        else if(coTimChcesDokazat.equals("teplota"))prikazNaMiru="t";
-        else if(coTimChcesDokazat.equals("vlhkost"))prikazNaMiru="v";
+        if(coTimChcesDokazat.equals("pohyb:svetlo"))prikazNaMiru="p:s";
+        else if(coTimChcesDokazat.equals("pohyb"))prikazNaMiru="p";
+        else if(coTimChcesDokazat.equals("svetlo"))prikazNaMiru="s";
 
         return prikazNaMiru;
     }
@@ -120,7 +131,7 @@ public class Teplomer extends Prvek {
             public void onClick(View v) {
                 if(((CheckBox)v).isChecked()){
                     Edbheslo.setTransformationMethod(null);
-            }
+                }
                 else{
 
                     Edbheslo.setTransformationMethod(new PasswordTransformationMethod());
@@ -168,13 +179,13 @@ public class Teplomer extends Prvek {
     }
     private funkcnost facha=null;
     @Override
-    protected void fachej(Activity kdeToDelam){
+    public void fachej(Activity kdeToDelam){
         facha=new funkcnost(kdeToDelam);
     }
     class funkcnost {
-        private TextView conectly,teplotka,vlhkostik,Od,Do;
+        private TextView conectly, pohybovnik, svetlik,Od,Do;
         private Button obnov,pripij,vyberOd,vyberDo,VypracujGraf;
-        private RadioButton teplotaMod;
+        private RadioButton pohybMod;
         private LinearLayout grafovaCast;
         Thread Thread2 = null;
         String SERVER_IP=getUrl().toString();
@@ -186,8 +197,8 @@ public class Teplomer extends Prvek {
         public  funkcnost(final Activity kdeToDelam){
             this.kdeToDelam=kdeToDelam;
             conectly=kdeToDelam.findViewById(R.id.textView11);
-            teplotka=kdeToDelam.findViewById(R.id.textView10);
-            vlhkostik=kdeToDelam.findViewById(R.id.textView9);
+            pohybovnik =kdeToDelam.findViewById(R.id.textView10);
+            svetlik =kdeToDelam.findViewById(R.id.textView9);
             obnov=kdeToDelam.findViewById(R.id.obnov);
             pripij=kdeToDelam.findViewById(R.id.pripij);
 
@@ -199,7 +210,7 @@ public class Teplomer extends Prvek {
                     obnov.performClick();
                 }
             },1000);
-            new Thread(new Thread1()).start();
+            new Thread(new funkcnost.Thread1()).start();
             obnov.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -219,7 +230,7 @@ public class Teplomer extends Prvek {
             Od=kdeToDelam.findViewById(R.id.od);
             Do=kdeToDelam.findViewById(R.id.Do);
             grafovaCast=kdeToDelam.findViewById(R.id.grafy);
-            teplotaMod=kdeToDelam.findViewById(R.id.radioButton);
+            pohybMod =kdeToDelam.findViewById(R.id.radioButton);
             VypracujGraf=kdeToDelam.findViewById(R.id.zpracuj);
             if(MamDatabazi){
                 grafovaCast.setVisibility(View.VISIBLE);
@@ -228,8 +239,8 @@ public class Teplomer extends Prvek {
                     public void onClick(View v) {
                         if(odDatum!=null){
                             if(DoDadtum!=null){
-                                String hodnota="vlhkost";
-                                if(teplotaMod.isChecked())hodnota="teplota";
+                                String hodnota="svetlo";
+                                if(pohybMod.isChecked())hodnota="pohyb";
 
                                 ArrayList<CharSequence> lisovniTajemstvi=new ArrayList<>();
                                 lisovniTajemstvi.add(db);
@@ -273,11 +284,11 @@ public class Teplomer extends Prvek {
             }
         }
         public void refresh(View v) {
-                new Thread(new Thread3("t:v")).start();
+            new Thread(new funkcnost.Thread3("p:s")).start();
 
         }
         public void pripjenisa(View v){
-            new Thread(new Thread1()).start();
+            new Thread(new funkcnost.Thread1()).start();
 
         }
         private PrintWriter output;
@@ -296,7 +307,7 @@ public class Teplomer extends Prvek {
                         }
                     });
                     pripojen=true;
-                    Thread2=new Thread(new Thread2());
+                    Thread2=new Thread(new funkcnost.Thread2());
                     Thread2.start();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -325,10 +336,10 @@ public class Teplomer extends Prvek {
                                     //Toast.makeText(kdeToDelam," prisla "+message,Toast.LENGTH_LONG).show();
                                     try{
                                         String []polak=message.split(":");
-                                        teplotka.setText("teplota: "+polak[0]+"°C");
-                                        vlhkostik.setText("vlhkost: "+polak[1]+"%");
+                                        pohybovnik.setText("Pohyb: "+polak[0]);
+                                        svetlik.setText("Intenzita svetla: "+polak[1]+"lux");
                                     }catch(Exception e){
-                                        
+
                                     }
 
 
@@ -336,7 +347,7 @@ public class Teplomer extends Prvek {
                             });
                         }
                         else {
-                            new Thread(new Thread1()).start();
+                            new Thread(new funkcnost.Thread1()).start();
                             return;
                         }
                     } catch (IOException e) {
@@ -358,7 +369,7 @@ public class Teplomer extends Prvek {
                     kdeToDelam.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(kdeToDelam,"poslána teplota",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(kdeToDelam,"poslána žádost",Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -439,7 +450,8 @@ public class Teplomer extends Prvek {
     }
 
     @Override
-    protected void uzNeFachej(Activity kdeToDelam) {
+    public void uzNeFachej(Activity kdeToDelam) {
         facha.SkonciTo();
     }
+
 }

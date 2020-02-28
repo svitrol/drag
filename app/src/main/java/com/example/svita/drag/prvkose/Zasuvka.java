@@ -1,12 +1,8 @@
-package com.example.svita.drag;
+package com.example.svita.drag.prvkose;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.text.format.DateFormat;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
@@ -16,16 +12,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.svita.drag.nactiDataDoGrafu.vykresliGraf;
-import com.example.svita.drag.vychytavkyprozasuvku.RelePresDb;
-import com.example.svita.drag.vychytavkyprozasuvku.makraZasuvky;
+import com.example.svita.drag.R;
+import com.example.svita.drag.prvkose.vychytavkyprozasuvku.RelePresDb;
+import com.example.svita.drag.prvkose.vychytavkyprozasuvku.makraZasuvky;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
+
 import android.os.Handler;
 
 public class Zasuvka extends Prvek {
@@ -217,7 +213,7 @@ public class Zasuvka extends Prvek {
     }
     private funkcnost facha=null;
     @Override
-    protected void fachej(Activity kdeToDelam){
+    public void fachej(Activity kdeToDelam){
         facha=new funkcnost(kdeToDelam);
     }
     class funkcnost{
@@ -471,7 +467,7 @@ public class Zasuvka extends Prvek {
         }
     }
     @Override
-    protected void uzNeFachej(Activity kdeToDelam) {
+    public void uzNeFachej(Activity kdeToDelam) {
         facha.SkonciTo();
     }
 }

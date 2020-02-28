@@ -1,4 +1,4 @@
-package com.example.svita.drag.vychytavkyprozasuvku;
+package com.example.svita.drag.prvkose.vychytavkyprozasuvku;
 
 import android.view.View;
 

@@ -1,7 +1,6 @@
 package com.example.svita.drag;
 
 import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.AsyncTask;
@@ -13,28 +12,31 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.svita.drag.Prvek;
+
+import com.example.svita.drag.prvkose.Kamera;
+import com.example.svita.drag.prvkose.KliknutiPrvku;
+import com.example.svita.drag.prvkose.Prvek;
+import com.example.svita.drag.prvkose.SensorPS;
+import com.example.svita.drag.prvkose.Teplomer;
+import com.example.svita.drag.prvkose.UlozCoPujde;
+import com.example.svita.drag.prvkose.Zarovka;
+import com.example.svita.drag.prvkose.Zasuvka;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         }
-                        dalsi.prosteVsecko.setId(prvke.size());
+                        dalsi.getProsteVsecko().setId(prvke.size());
                         prvke.add(dalsi);
                         //pridání polozky do layoutu
                         plocha.addView(dalsi.dejmiNovyNahled(MainActivity.this));
