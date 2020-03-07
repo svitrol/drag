@@ -421,6 +421,7 @@ public class makraZasuvky extends AppCompatActivity {
             List<String> pinos= Arrays.asList(aktivni.coMaPrvekPodSebou().split(":"));
             if(Necitelny.charAt(0)=='v'){
                 Prvek kterySePouzil=zCehoVybiram.get(Necitelny.charAt(1)-48);
+                if(kterySePouzil==null)return Necitelny;
                 String coByToMhloByt=kterySePouzil.coMaPrvekPodSebou();
                 vysledkos+=kterySePouzil.getProsteVsecko().getId()+": "+kterySePouzil.getJmeno()+" :"+coByToMhloByt.split(":")[Necitelny.charAt(2)-48];
             }

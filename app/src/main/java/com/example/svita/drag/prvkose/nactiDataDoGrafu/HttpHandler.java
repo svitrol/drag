@@ -111,8 +111,12 @@ public class HttpHandler extends AsyncTask<String,Void,String> {
         for(int i=0;i<velikost;i++) {
             String[] housky = (pole[i]).split(",");
             /*Hodnota hodnotisk=new Hodnota(housky[0],housky[1],housky[2]);*/
-            casy[i] = housky[2];
-            yValues.add(new Entry(i, Float.parseFloat(housky[1])));
+
+            if(housky.length>=3){
+                casy[i] = housky[2];
+                yValues.add(new Entry(i, Float.parseFloat(housky[1])));
+            }
+
         }
         Graf.setDragEnabled(true);
         Graf.setScaleEnabled(true);

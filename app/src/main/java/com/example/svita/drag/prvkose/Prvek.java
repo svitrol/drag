@@ -18,7 +18,7 @@ import com.example.svita.drag.FunkcePrvku;
 import com.example.svita.drag.R;
 
 
-public class Prvek{
+public abstract class Prvek{
     EditText Ejmeno,Eipadresa,Eport;
 
     public UlozCoPujde getProsteVsecko() {
@@ -353,8 +353,8 @@ public class Prvek{
         soradniceY=prosteVsecko.getSoradniceY() ;
 
     }
-    public void fachej(Activity kdeToDelam){    }
-    public void uzNeFachej(Activity kdeToDelam){};
+    public void fachej(Activity kdeToDelam){}
+    public void uzNeFachej(Activity kdeToDelam){}
 
 
 
