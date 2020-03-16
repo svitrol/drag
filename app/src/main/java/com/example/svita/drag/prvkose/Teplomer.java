@@ -30,40 +30,19 @@ import android.os.Handler;
 
 public class Teplomer extends Prvek {
 
-    public String getDb() {
-        return db;
-    }
-
-    public void setDb(String ipdbcka) {
-        db = ipdbcka;
-    }
-
-    public String getDbjmeno() {
-        return dbjmeno;
-    }
-
-    public void setDbjmeno(String dbjmeno) {
-        this.dbjmeno = dbjmeno;
-    }
-    public void setDbheslo(String dbheslo) {
-        this.dbheslo = dbheslo;
-    }
-
-    public String getDbheslo() {
-        return dbheslo;
-    }
-
-    public String db="1.1.1.1";
-    protected String dbheslo="";
-    public String dbjmeno="";
-    public boolean MamDatabazi=true;
-    EditText Edb,Edbjmeno,Edbheslo;
-    CheckBox MaDatabazi,zobrazHeslo;
+    private EditText Edb,Edbjmeno,Edbheslo;
+    private CheckBox MaDatabazi,zobrazHeslo;
     public Teplomer() {
         super(R.drawable.thermometer, "teplota");
-        prosteVsecko=new UlozCoPujde("Teplomer","teplota");
-        vlastnostiLayout=R.layout.activity_vlastnosti;
-        funkcniLayout=R.layout.activity_funkce_prvku;
+        prosteVsecko.setTypPrvku("Teplomer");
+        vlastnostiLayout = R.layout.activity_vlastnosti;
+        funkcniLayout = R.layout.activity_funkce_prvku;
+    }
+    public Teplomer(UlozCoPujde prostevsecko){
+        super(R.drawable.thermometer, "teplota");
+        vlastnostiLayout = R.layout.activity_vlastnosti;
+        funkcniLayout = R.layout.activity_funkce_prvku;
+        setProsteVsecko(prostevsecko);
     }
     @Override
     public boolean isPrvekRidici(){
@@ -92,10 +71,10 @@ public class Teplomer extends Prvek {
         Edbheslo=kdeToDelam.findViewById(R.id.heslodbcka);
         MaDatabazi=kdeToDelam.findViewById(R.id.checkBox);
         zobrazHeslo=kdeToDelam.findViewById(R.id.checkBox2);
-        Edb.setText(getDb());
-        Edbjmeno.setText(getDbjmeno());
-        Edbheslo.setText(getDbheslo());
-        if(!MamDatabazi){
+        Edb.setText(prosteVsecko.getDb());
+        Edbjmeno.setText(prosteVsecko.getDbjmeno());
+        Edbheslo.setText(prosteVsecko.getDbheslo());
+        if(!prosteVsecko.isMamDatabazi()){
             Edb.setVisibility(View.INVISIBLE);
             Edbjmeno.setVisibility(View.INVISIBLE);
             Edbheslo.setVisibility(View.INVISIBLE);
@@ -104,13 +83,13 @@ public class Teplomer extends Prvek {
             @Override
             public void onClick(View v) {
                 if(((CheckBox)v).isChecked()){
-                    MamDatabazi=true;
+                    prosteVsecko.MamDatabazi=true;
                     Edb.setVisibility(View.VISIBLE);
                     Edbjmeno.setVisibility(View.VISIBLE);
                     Edbheslo.setVisibility(View.VISIBLE);
                 }
                 else{
-                    MamDatabazi=false;
+                    prosteVsecko.MamDatabazi=false;
                     Edb.setVisibility(View.INVISIBLE);
                     Edbjmeno.setVisibility(View.INVISIBLE);
                     Edbheslo.setVisibility(View.INVISIBLE);
@@ -135,37 +114,11 @@ public class Teplomer extends Prvek {
     public void vemSiCoPotrebujes(Activity kdeToDelam){
         super.vemSiCoPotrebujes(kdeToDelam);
         if(MaDatabazi.isChecked()){
-            setDb(Edb.getText().toString());
-            setDbjmeno(Edbjmeno.getText().toString());
-            setDbheslo(Edbheslo.getText().toString());
+            prosteVsecko.setDb(Edb.getText().toString());
+            prosteVsecko.setDbjmeno(Edbjmeno.getText().toString());
+            prosteVsecko.setDbheslo(Edbheslo.getText().toString());
         }
         updatePrvek();
-
-    }
-
-    @Override
-    public void NaplnProsteVsecko(){
-
-        super.NaplnProsteVsecko();
-
-        prosteVsecko.setDb(db) ;
-
-        prosteVsecko.setDbheslo(dbheslo) ;
-
-        prosteVsecko.setDbjmeno(dbjmeno) ;
-
-        prosteVsecko.setMamDatabazi(MamDatabazi) ;
-    }
-    @Override
-    public void VemSiToZpatky(){
-        super.VemSiToZpatky();
-        setDb(prosteVsecko.getDb());
-
-        dbheslo=prosteVsecko.getDbheslo() ;
-
-        dbjmeno=prosteVsecko.getDbjmeno() ;
-
-        MamDatabazi=prosteVsecko.isMamDatabazi() ;
 
     }
     private funkcnost facha=null;
@@ -179,8 +132,8 @@ public class Teplomer extends Prvek {
         private RadioButton teplotaMod;
         private LinearLayout grafovaCast;
         Thread Thread2 = null;
-        String SERVER_IP=getUrl().toString();
-        int SERVER_PORT=getPort();
+        String SERVER_IP=prosteVsecko.getUrl();
+        int SERVER_PORT=prosteVsecko.getPort();
         Calendar odDatum=null,DoDadtum=null;
         private Activity kdeToDelam;
         private Boolean pripojen=false;
@@ -223,7 +176,7 @@ public class Teplomer extends Prvek {
             grafovaCast=kdeToDelam.findViewById(R.id.grafy);
             teplotaMod=kdeToDelam.findViewById(R.id.radioButton);
             VypracujGraf=kdeToDelam.findViewById(R.id.zpracuj);
-            if(MamDatabazi){
+            if(prosteVsecko.isMamDatabazi()){
                 grafovaCast.setVisibility(View.VISIBLE);
                 VypracujGraf.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -234,9 +187,9 @@ public class Teplomer extends Prvek {
                                 if(teplotaMod.isChecked())hodnota="teplota";
 
                                 ArrayList<CharSequence> lisovniTajemstvi=new ArrayList<>();
-                                lisovniTajemstvi.add(db);
-                                lisovniTajemstvi.add(dbjmeno);
-                                lisovniTajemstvi.add(dbheslo);
+                                lisovniTajemstvi.add(prosteVsecko.getDb());
+                                lisovniTajemstvi.add(prosteVsecko.getDbjmeno());
+                                lisovniTajemstvi.add(prosteVsecko.getDbheslo());
                                 lisovniTajemstvi.add(hodnota);
                                 lisovniTajemstvi.add(DateFormat.format("yyyy-MM-dd HH:mm:ss", odDatum));
                                 lisovniTajemstvi.add(DateFormat.format("yyyy-MM-dd HH:mm:ss", DoDadtum));

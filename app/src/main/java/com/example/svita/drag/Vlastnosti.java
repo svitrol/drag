@@ -8,7 +8,7 @@ import android.view.View;
 import com.example.svita.drag.prvkose.Prvek;
 import com.example.svita.drag.prvkose.UlozCoPujde;
 
-public class vlastnosti extends AppCompatActivity {
+public class Vlastnosti extends AppCompatActivity {
 
     Prvek coNastavuji=null;
     @Override

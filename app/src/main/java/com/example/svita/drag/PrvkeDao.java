@@ -23,6 +23,7 @@ public interface PrvkeDao {
 
     @Update
     void update(UlozCoPujde prvek);
+
     @Query("DELETE FROM ulozcopujde")
     public void nukeTable();
 }

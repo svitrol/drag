@@ -27,40 +27,31 @@ import android.os.Handler;
 public class Zasuvka extends Prvek {
     public Zasuvka() {
         super(R.drawable.plugwall,"Zásuvka");
-        prosteVsecko=new UlozCoPujde("Zasuvka","Zásuvka");
+        prosteVsecko.setTypPrvku("Zasuvka");
+        funkcniLayout=R.layout.funkce_zasuvky;
+        vlastnostiLayout=R.layout.vlastnosti_zasuvka;
+        setKolikZasuvek(1);
+
+    }
+    public Zasuvka(UlozCoPujde prostevsecko) {
+        super(R.drawable.plugwall,"Zásuvka");
+        setProsteVsecko(prostevsecko);
         funkcniLayout=R.layout.funkce_zasuvky;
         vlastnostiLayout=R.layout.vlastnosti_zasuvka;
     }
-
-    public String getDb() {
-        return db;
-    }
-
-    public void setDb(String url) {
-        db = url;
-    }
-
-    public String getDbjmeno() {
-        return dbjmeno;
-    }
-
-    public void setDbjmeno(String dbjmeno) {
-        this.dbjmeno = dbjmeno;
-    }
-
-    public void setDbheslo(String dbheslo) {
-        this.dbheslo = dbheslo;
-    }
-
-    public String getDbheslo() {
-        return dbheslo;
-    }
-
-    public String db="1.1.1.1";
-    protected String dbheslo="";
-    public String dbjmeno="";
-    public boolean MamDatabazi=true;
     public int kolikZasuvek=1;
+
+    public void setKolikZasuvek(int kolikZasuvek) {
+        this.kolikZasuvek = kolikZasuvek;
+        prosteVsecko.setPopis("pocetZasuvek="+kolikZasuvek);
+
+    }
+
+    @Override
+    public void setProsteVsecko(UlozCoPujde prosteVsecko) {
+        super.setProsteVsecko(prosteVsecko);
+        kolikZasuvek=Integer.parseInt(prosteVsecko.getPopis().split("=")[1]);
+    }
 
     EditText Edb,Edbjmeno,Edbheslo;
     CheckBox MaDatabazi,zobrazHeslo;
@@ -92,10 +83,10 @@ public class Zasuvka extends Prvek {
             }
         }
         aktivni.setChecked(true);
-        Edb.setText(getDb());
-        Edbjmeno.setText(getDbjmeno());
-        Edbheslo.setText(getDbheslo());
-        if(!MamDatabazi){
+        Edb.setText(prosteVsecko.getDb());
+        Edbjmeno.setText(prosteVsecko.getDbjmeno());
+        Edbheslo.setText(prosteVsecko.getDbheslo());
+        if(!prosteVsecko.isMamDatabazi()){
             Edb.setVisibility(View.INVISIBLE);
             Edbjmeno.setVisibility(View.INVISIBLE);
             Edbheslo.setVisibility(View.INVISIBLE);
@@ -104,13 +95,13 @@ public class Zasuvka extends Prvek {
             @Override
             public void onClick(View v) {
                 if(((CheckBox)v).isChecked()){
-                    MamDatabazi=true;
+                    prosteVsecko.MamDatabazi=true;
                     Edb.setVisibility(View.VISIBLE);
                     Edbjmeno.setVisibility(View.VISIBLE);
                     Edbheslo.setVisibility(View.VISIBLE);
                 }
                 else{
-                    MamDatabazi=false;
+                    prosteVsecko.MamDatabazi=false;
                     Edb.setVisibility(View.INVISIBLE);
                     Edbjmeno.setVisibility(View.INVISIBLE);
                     Edbheslo.setVisibility(View.INVISIBLE);
@@ -134,9 +125,9 @@ public class Zasuvka extends Prvek {
     public void vemSiCoPotrebujes(Activity kdeToDelam){
         super.vemSiCoPotrebujes(kdeToDelam);
         if(MaDatabazi.isChecked()){
-            setDb(Edb.getText().toString());
-            setDbjmeno(Edbjmeno.getText().toString());
-            setDbheslo(Edbheslo.getText().toString());
+            prosteVsecko.setDb(Edb.getText().toString());
+            prosteVsecko.setDbjmeno(Edbjmeno.getText().toString());
+            prosteVsecko.setDbheslo(Edbheslo.getText().toString());
         }
         switch (skupnika.getCheckedRadioButtonId()){
             case R.id.Z1:{
@@ -156,38 +147,12 @@ public class Zasuvka extends Prvek {
                 break;
             }
         }
+        setKolikZasuvek(kolikZasuvek);
         updatePrvek();
 
     }
 
-    @Override
-    public void NaplnProsteVsecko(){
-
-        super.NaplnProsteVsecko();
-
-        prosteVsecko.setDb(db) ;
-
-        prosteVsecko.setDbheslo(dbheslo) ;
-
-        prosteVsecko.setDbjmeno(dbjmeno) ;
-
-        prosteVsecko.setMamDatabazi(MamDatabazi) ;
-
-        prosteVsecko.setPopis("pocetZasuvek="+kolikZasuvek);
-    }
-    @Override
-    public void VemSiToZpatky(){
-        super.VemSiToZpatky();
-        setDb(prosteVsecko.getDb());
-
-        dbheslo=prosteVsecko.getDbheslo() ;
-
-        dbjmeno=prosteVsecko.getDbjmeno() ;
-
-        MamDatabazi=prosteVsecko.isMamDatabazi() ;
-        kolikZasuvek=Integer.parseInt(prosteVsecko.getPopis().split("=")[1]);
-
-    }
+    //"pocetZasuvek="+kolikZasuvek
     @Override
     public String coMaPrvekPodSebou(){
         String mojeOvecky="";
@@ -220,8 +185,8 @@ public class Zasuvka extends Prvek {
         private Button infosaurus;
         private Thread Thread1 = null;
         private boolean pripojen=false;
-        private String SERVER_IP=getUrl().toString();
-        private int SERVER_PORT=getPort();
+        private String SERVER_IP=prosteVsecko.getUrl();
+        private int SERVER_PORT=prosteVsecko.getPort();
         private Activity kdeToDelam;
         private boolean poslalJsem=false,dosloOk=false;
         private Button aktivni=null,Makra;

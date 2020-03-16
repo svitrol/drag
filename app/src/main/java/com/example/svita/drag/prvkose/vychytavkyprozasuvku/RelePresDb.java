@@ -28,9 +28,9 @@ public class RelePresDb extends AsyncTask<String,Void,String> {
     Prvek aktivni;
 
     public RelePresDb(Zasuvka aktivni, Button[] pole, int kolikZasuvek) {
-        this.login_url = aktivni.getDb();
-        this.login_name = aktivni.getDbjmeno();
-        this.login_pass = aktivni.getDbheslo();
+        this.login_url = aktivni.prosteVsecko.getDb();
+        this.login_name = aktivni.prosteVsecko.getDbjmeno();
+        this.login_pass = aktivni.prosteVsecko.getDbheslo();
         this.pole=pole;
         this.kolikZasuvek=kolikZasuvek;
         this.aktivni=aktivni;

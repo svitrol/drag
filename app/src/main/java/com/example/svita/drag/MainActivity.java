@@ -251,9 +251,14 @@ public class MainActivity extends AppCompatActivity {
                         int id=item.getItemId();
                         switch (id){
                             case R.id.vlastnosti:{
-                                Intent funkcni=new Intent(MainActivity.this,vlastnosti.class);
-                                funkcni.putExtra("Vlastnosti",coKlik.getProsteVsecko());
-                                MainActivity.this.startActivityForResult(funkcni,NASTAVENI_DOPLNENOS);
+                                Intent funkcni=new Intent(MainActivity.this
+                                        , Vlastnosti.class);
+                                funkcni.putExtra("Vlastnosti"
+                                        ,coKlik.getProsteVsecko());
+                                MainActivity
+                                        .this
+                                        .startActivityForResult(funkcni
+                                                ,NASTAVENI_DOPLNENOS);
                                 break;
 
                             }

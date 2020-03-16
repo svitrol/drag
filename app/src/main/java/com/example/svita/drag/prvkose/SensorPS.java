@@ -30,47 +30,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class SensorPS extends Prvek {
-    public String getDb() {
-        return db;
-    }
 
-    public void setDb(String ipdbcka) {
-        db = ipdbcka;
-    }
-
-    public String getDbjmeno() {
-        return dbjmeno;
-    }
-
-    public void setDbjmeno(String dbjmeno) {
-        this.dbjmeno = dbjmeno;
-    }
-
-    public int getDbport() {
-        return dbport;
-    }
-
-    public void setDbport(int dbport) {
-        this.dbport = dbport;
-    }
-    public void setDbheslo(String dbheslo) {
-        this.dbheslo = dbheslo;
-    }
-
-    public String getDbheslo() {
-        return dbheslo;
-    }
-
-    public String db="1.1.1.1";
-    protected String dbheslo="";
-    public String dbjmeno="";
-    public int dbport=80;
-    public boolean MamDatabazi=true;
     EditText Edb,Edbjmeno,Edbheslo;
     CheckBox MaDatabazi,zobrazHeslo;
     public SensorPS() {
         super(R.drawable.sensorpohybu, "sensor pohybu");
-        prosteVsecko=new UlozCoPujde("SensorPS","sensor pohybu");
+        prosteVsecko.setTypPrvku("SensorPS");
+        vlastnostiLayout=R.layout.activity_vlastnosti;
+        funkcniLayout=R.layout.funkce_ps;
+    }
+    public SensorPS(UlozCoPujde prostevsecko) {
+        super(R.drawable.sensorpohybu, "sensor pohybu");
+        setProsteVsecko(prostevsecko);
         vlastnostiLayout=R.layout.activity_vlastnosti;
         funkcniLayout=R.layout.funkce_ps;
     }
@@ -101,10 +72,10 @@ public class SensorPS extends Prvek {
         Edbheslo=kdeToDelam.findViewById(R.id.heslodbcka);
         MaDatabazi=kdeToDelam.findViewById(R.id.checkBox);
         zobrazHeslo=kdeToDelam.findViewById(R.id.checkBox2);
-        Edb.setText(getDb());
-        Edbjmeno.setText(getDbjmeno());
-        Edbheslo.setText(getDbheslo());
-        if(!MamDatabazi){
+        Edb.setText(prosteVsecko.getDb());
+        Edbjmeno.setText(prosteVsecko.getDbjmeno());
+        Edbheslo.setText(prosteVsecko.getDbheslo());
+        if(!prosteVsecko.isMamDatabazi()){
             Edb.setVisibility(View.INVISIBLE);
             Edbjmeno.setVisibility(View.INVISIBLE);
             Edbheslo.setVisibility(View.INVISIBLE);
@@ -113,13 +84,13 @@ public class SensorPS extends Prvek {
             @Override
             public void onClick(View v) {
                 if(((CheckBox)v).isChecked()){
-                    MamDatabazi=true;
+                    prosteVsecko.MamDatabazi=true;
                     Edb.setVisibility(View.VISIBLE);
                     Edbjmeno.setVisibility(View.VISIBLE);
                     Edbheslo.setVisibility(View.VISIBLE);
                 }
                 else{
-                    MamDatabazi=false;
+                    prosteVsecko.MamDatabazi=false;
                     Edb.setVisibility(View.INVISIBLE);
                     Edbjmeno.setVisibility(View.INVISIBLE);
                     Edbheslo.setVisibility(View.INVISIBLE);
@@ -144,37 +115,11 @@ public class SensorPS extends Prvek {
     public void vemSiCoPotrebujes(Activity kdeToDelam){
         super.vemSiCoPotrebujes(kdeToDelam);
         if(MaDatabazi.isChecked()){
-            setDb(Edb.getText().toString());
-            setDbjmeno(Edbjmeno.getText().toString());
-            setDbheslo(Edbheslo.getText().toString());
+            prosteVsecko.setDb(Edb.getText().toString());
+            prosteVsecko.setDbjmeno(Edbjmeno.getText().toString());
+            prosteVsecko.setDbheslo(Edbheslo.getText().toString());
         }
         updatePrvek();
-
-    }
-
-    @Override
-    public void NaplnProsteVsecko(){
-
-        super.NaplnProsteVsecko();
-
-        prosteVsecko.setDb(db) ;
-
-        prosteVsecko.setDbheslo(dbheslo) ;
-
-        prosteVsecko.setDbjmeno(dbjmeno) ;
-
-        prosteVsecko.setMamDatabazi(MamDatabazi) ;
-    }
-    @Override
-    public void VemSiToZpatky(){
-        super.VemSiToZpatky();
-        setDb(prosteVsecko.getDb());
-
-        dbheslo=prosteVsecko.getDbheslo() ;
-
-        dbjmeno=prosteVsecko.getDbjmeno() ;
-
-        MamDatabazi=prosteVsecko.isMamDatabazi() ;
 
     }
     private funkcnost facha=null;
@@ -188,8 +133,8 @@ public class SensorPS extends Prvek {
         private RadioButton pohybMod;
         private LinearLayout grafovaCast;
         Thread Thread2 = null;
-        String SERVER_IP=getUrl().toString();
-        int SERVER_PORT=getPort();
+        String SERVER_IP=prosteVsecko.getUrl();
+        int SERVER_PORT=prosteVsecko.getPort();
         Calendar odDatum=null,DoDadtum=null;
         private Activity kdeToDelam;
         private Boolean pripojen=false;
@@ -232,7 +177,7 @@ public class SensorPS extends Prvek {
             grafovaCast=kdeToDelam.findViewById(R.id.grafy);
             pohybMod =kdeToDelam.findViewById(R.id.radioButton);
             VypracujGraf=kdeToDelam.findViewById(R.id.zpracuj);
-            if(MamDatabazi){
+            if(prosteVsecko.isMamDatabazi()){
                 grafovaCast.setVisibility(View.VISIBLE);
                 VypracujGraf.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -243,9 +188,9 @@ public class SensorPS extends Prvek {
                                 if(pohybMod.isChecked())hodnota="pohyb";
 
                                 ArrayList<CharSequence> lisovniTajemstvi=new ArrayList<>();
-                                lisovniTajemstvi.add(db);
-                                lisovniTajemstvi.add(dbjmeno);
-                                lisovniTajemstvi.add(dbheslo);
+                                lisovniTajemstvi.add(prosteVsecko.db);
+                                lisovniTajemstvi.add(prosteVsecko.dbjmeno);
+                                lisovniTajemstvi.add(prosteVsecko.dbheslo);
                                 lisovniTajemstvi.add(hodnota);
                                 lisovniTajemstvi.add(DateFormat.format("yyyy-MM-dd HH:mm:ss", odDatum));
                                 lisovniTajemstvi.add(DateFormat.format("yyyy-MM-dd HH:mm:ss", DoDadtum));

@@ -142,8 +142,8 @@ public class makraZasuvky extends AppCompatActivity {
         for(int i=0;i<potrebnyPrvky.size();i++){
             Prvek zlaticko=potrebnyPrvky.get(i);
             konecnaZprva+=String.format("%s:%d[%s];",
-                    zlaticko.getUrl().toString()
-                    ,zlaticko.getPort()
+                    zlaticko.prosteVsecko.getUrl()
+                    ,zlaticko.prosteVsecko.getPort()
                     ,zlaticko.dejMiPrikazivo(hodnotyCoBuduPotrebovat.get(i)));
         }
 
@@ -335,8 +335,8 @@ public class makraZasuvky extends AppCompatActivity {
         //Thread Thread1 = null;
 
         public odesliMakro(String zprava,View view){
-            SERVER_IP=aktivni.getUrl().toString();
-            SERVER_PORT=aktivni.getPort();
+            SERVER_IP=aktivni.prosteVsecko.getUrl();
+            SERVER_PORT=aktivni.prosteVsecko.getPort();
             this.view=view;
 
             if(zprava.length()>49){
@@ -413,8 +413,8 @@ public class makraZasuvky extends AppCompatActivity {
         //Thread Thread1 = null;
 
         public dostanMakroZmodulu(){
-            SERVER_IP=aktivni.getUrl().toString();
-            SERVER_PORT=aktivni.getPort();
+            SERVER_IP=aktivni.prosteVsecko.getUrl();
+            SERVER_PORT=aktivni.prosteVsecko.getPort();
         }
         String dostanCitelnyTvarpromene(String Necitelny,List<Prvek> zCehoVybiram){
             String vysledkos="";
@@ -423,7 +423,7 @@ public class makraZasuvky extends AppCompatActivity {
                 Prvek kterySePouzil=zCehoVybiram.get(Necitelny.charAt(1)-48);
                 if(kterySePouzil==null)return Necitelny;
                 String coByToMhloByt=kterySePouzil.coMaPrvekPodSebou();
-                vysledkos+=kterySePouzil.getProsteVsecko().getId()+": "+kterySePouzil.getJmeno()+" :"+coByToMhloByt.split(":")[Necitelny.charAt(2)-48];
+                vysledkos+=kterySePouzil.getProsteVsecko().getId()+": "+kterySePouzil.prosteVsecko.getJmeno()+" :"+coByToMhloByt.split(":")[Necitelny.charAt(2)-48];
             }
             else if(pinos.indexOf(Necitelny)!=-1) {
                 vysledkos="TentoPrvek:"+Necitelny;
@@ -491,7 +491,7 @@ public class makraZasuvky extends AppCompatActivity {
                         final Prvek pouzity= Iterables.tryFind(prvkySeKterymiBychMohlPracovat, new Predicate<Prvek>() {
                             @Override
                             public boolean apply(@NullableDecl Prvek input) {
-                                return (input.getUrl().toString()+":"+input.getPort()).equals(uzFaktNevimJakToPojmenovat);
+                                return (input.prosteVsecko.getUrl()+":"+input.prosteVsecko.getPort()).equals(uzFaktNevimJakToPojmenovat);
                             }
                         }).orNull();
                         coJeTamPouzito.add(pouzity);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">drag</string>
+    <string name="app_name">IOT Domácnost</string>
     <string name="title_activity_makra_zasuvky">makraZasuvky</string>
     <string-array name="znaminka">
         <item>Větší</item>

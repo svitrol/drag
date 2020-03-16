@@ -60,6 +60,10 @@ public class UlozCoPujde implements Serializable {
         this.typPrvku = typPrvku;
         this.jmeno = jmeno;
     }
+    @Ignore
+    public UlozCoPujde(String jmeno) {
+        this.jmeno = jmeno;
+    }
 
     public int getId() {
         return id;
