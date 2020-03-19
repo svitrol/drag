@@ -19,6 +19,11 @@ public class vykresliGraf extends AppCompatActivity {
         ArrayList<CharSequence> lisovniTajemstvi=cil.getCharSequenceArrayListExtra("Graf");
         LineChart Graf=findViewById(R.id.graf);
         HttpHandler nactiGraf=new HttpHandler(this,Graf);
-        nactiGraf.execute(lisovniTajemstvi.get(0).toString(),lisovniTajemstvi.get(1).toString(),lisovniTajemstvi.get(2).toString(),lisovniTajemstvi.get(3).toString(),lisovniTajemstvi.get(4).toString(),lisovniTajemstvi.get(5).toString());
+        nactiGraf.execute(lisovniTajemstvi.get(0).toString()
+                ,lisovniTajemstvi.get(1).toString()
+                ,lisovniTajemstvi.get(2).toString()
+                ,lisovniTajemstvi.get(3).toString()
+                ,lisovniTajemstvi.get(4).toString()
+                ,lisovniTajemstvi.get(5).toString());
     }
 }

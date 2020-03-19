@@ -46,9 +46,12 @@ public class RelePresDb extends AsyncTask<String,Void,String> {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-                String data = URLEncoder.encode("jmeno","UTF-8")+"="+URLEncoder.encode(login_name,"UTF-8")+"&"+
-                        URLEncoder.encode("heslo","UTF-8")+"="+URLEncoder.encode(login_pass,"UTF-8")+"&"+
-                        URLEncoder.encode("akce","UTF-8")+"="+URLEncoder.encode(strings[0],"UTF-8");
+                String data = URLEncoder.encode("jmeno","UTF-8")+
+                        "="+URLEncoder.encode(login_name,"UTF-8")+"&"+
+                        URLEncoder.encode("heslo","UTF-8")+
+                        "="+URLEncoder.encode(login_pass,"UTF-8")+"&"+
+                        URLEncoder.encode("akce","UTF-8")+
+                        "="+URLEncoder.encode(strings[0],"UTF-8");
                 String[] coBudeOvladat= aktivni.coMaPrvekPodSebou().split(":");
                 for(int i=0;i<coBudeOvladat.length;i++){
                     String jdenotka=coBudeOvladat[i];
@@ -145,7 +148,7 @@ public class RelePresDb extends AsyncTask<String,Void,String> {
                 }
 
             }catch (Exception e){
-
+                e.printStackTrace();
             }
         }
     }

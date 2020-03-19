@@ -283,10 +283,8 @@ public class Teplomer extends Prvek {
                                         teplotka.setText("teplota: "+polak[0]+"°C");
                                         vlhkostik.setText("vlhkost: "+polak[1]+"%");
                                     }catch(Exception e){
-                                        
+                                        e.printStackTrace();
                                     }
-
-
                                 }
                             });
                         }

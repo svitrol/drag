@@ -120,7 +120,6 @@ public class HttpHandler extends AsyncTask<String,Void,String> {
         }
         Graf.setDragEnabled(true);
         Graf.setScaleEnabled(true);
-        Graf.setDragEnabled(true);
         Graf.setPinchZoom(true);
         XAxis osaX=Graf.getXAxis();
         YAxis osaY=Graf.getAxisLeft();
@@ -139,11 +138,6 @@ public class HttpHandler extends AsyncTask<String,Void,String> {
         osaX.setValueFormatter(new  MyXAxisFormatter(casy));
         osaX.setLabelRotationAngle(15);
         Graf.invalidate();
-
-
-
-
-
     }
 
     class MyXAxisFormatter extends ValueFormatter {
